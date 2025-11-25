@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>智慧农场管理系统 - 白菜专属</title>
+  <title>智慧农场管理系统</title>
   <!-- 引入外部资源 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -58,21 +58,13 @@
       <div class="flex justify-between h-16">
         <div class="flex items-center">
           <i class="fa fa-leaf text-primary text-2xl mr-2"></i>
-          <span class="font-bold text-xl">智慧农场 - 白菜管理</span>
+          <span class="font-bold text-xl">智慧农场</span>
         </div>
         <nav class="hidden md:flex items-center space-x-8">
           <a href="#dashboard" class="text-neutral-dark hover:text-primary transition-colors">数据概览</a>
-          <a href="#harvest" class="text-neutral-dark hover:text-primary transition-colors">白菜采收统计</a>
+          <a href="#harvest" class="text-neutral-dark hover:text-primary transition-colors">采收统计</a>
           <a href="#risk" class="text-neutral-dark hover:text-primary transition-colors">风险监控</a>
         </nav>
-        <div class="flex items-center">
-          <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-colors">
-            <i class="fa fa-user-circle mr-1"></i> 登录
-          </button>
-          <button class="md:hidden ml-4 text-neutral-dark" id="mobile-menu-button">
-            <i class="fa fa-bars text-xl"></i>
-          </button>
-        </div>
       </div>
     </div>
     
@@ -80,7 +72,7 @@
     <div class="md:hidden hidden bg-white shadow-lg absolute w-full" id="mobile-menu">
       <div class="px-4 py-4 space-y-3">
         <a href="#dashboard" class="block text-neutral-dark hover:text-primary transition-colors">数据概览</a>
-        <a href="#harvest" class="block text-neutral-dark hover:text-primary transition-colors">白菜采收统计</a>
+        <a href="#harvest" class="block text-neutral-dark hover:text-primary transition-colors">采收统计</a>
         <a href="#risk" class="block text-neutral-dark hover:text-primary transition-colors">风险监控</a>
       </div>
     </div>
@@ -91,10 +83,10 @@
     <!-- 欢迎区域 -->
     <section class="mb-12 text-center">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-neutral-dark mb-4">
-        智慧农场 <span class="text-primary">白菜专属管理平台</span>
+        智慧农场 <span class="text-primary">管理平台</span>
       </h1>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        实时监控白菜生长数据，精准统计采收量，科学防控风险
+        实时监控生长数据，精准统计采收量，科学防控风险
       </p>
     </section>
 
@@ -120,22 +112,6 @@
           </div>
         </div>
         
-        <!-- 种植面积 -->
-        <div class="bg-white rounded-xl p-6 card-shadow card-hover">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-gray-500 mb-1">白菜种植面积</p>
-              <p class="stat-number">42.8 <span class="text-lg font-normal">亩</span></p>
-              <p class="text-sm text-green-500 flex items-center mt-2">
-                <i class="fa fa-arrow-up mr-1"></i> 5.2% <span class="text-gray-500 ml-1">较上月</span>
-              </p>
-            </div>
-            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-secondary">
-              <i class="fa fa-map-marker text-xl"></i>
-            </div>
-          </div>
-        </div>
-        
         <!-- 风险指数 -->
         <div class="bg-white rounded-xl p-6 card-shadow card-hover">
           <div class="flex items-center justify-between">
@@ -157,7 +133,7 @@
     <!-- 采收统计区域 -->
     <section id="harvest" class="mb-16">
       <h2 class="text-2xl font-bold mb-8 flex items-center">
-        <i class="fa fa-bar-chart text-primary mr-2"></i> 白菜采收统计
+        <i class="fa fa-bar-chart text-primary mr-2"></i> 采收统计
       </h2>
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- 采收趋势图 -->
@@ -242,7 +218,7 @@
       <div class="bg-white rounded-xl p-8 card-shadow">
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-6 md:mb-0">
-                <h3 class="text-xl font-semibold mb-2">白菜种植风险评估</h3>
+                <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
                 <p class="text-gray-500 max-w-md">基于实时环境数据（温度、湿度、土壤、病虫害等）综合计算得出的风险指数。</p>
             </div>
             <div class="flex items-center space-x-6">
@@ -279,7 +255,7 @@
         <div class="mb-6 md:mb-0">
           <div class="flex items-center">
             <i class="fa fa-leaf text-primary text-2xl mr-2"></i>
-            <span class="font-bold text-xl">智慧农场 - 白菜管理</span>
+            <span class="font-bold text-xl">智慧农场</span>
           </div>
           <p class="text-gray-400 mt-2">提升农业生产效率与质量</p>
         </div>
@@ -465,3 +441,4 @@
   </script>
 </body>
 </html>
+
