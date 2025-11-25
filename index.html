@@ -129,88 +129,8 @@
         </div>
       </div>
     </section>
-
-    <!-- 采收统计区域 -->
-    <section id="harvest" class="mb-16">
-      <h2 class="text-2xl font-bold mb-8 flex items-center">
-        <i class="fa fa-bar-chart text-primary mr-2"></i> 采收统计
-      </h2>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- 采收趋势图 -->
-        <div class="bg-white rounded-xl p-6 card-shadow lg:col-span-2">
-          <h3 class="text-lg font-semibold mb-4">近期采收趋势</h3>
-          <div class="h-80">
-            <canvas id="harvest-chart"></canvas>
-          </div>
-        </div>
-        
-        <!-- 今日采收快速统计 -->
-        <div class="bg-white rounded-xl p-6 card-shadow">
-          <h3 class="text-lg font-semibold mb-4">今日采收</h3>
-           <div class="flex flex-col items-center justify-center h-full">
-            <i class="fa fa-leaf text-primary text-5xl mb-4"></i>
-            <p class="text-gray-500 mb-2">当前已采收</p>
-            <p class="text-4xl font-bold text-neutral-dark mb-4" id="today-harvest">1,280 <span class="text-xl font-normal">kg</span></p>
-            <button id="increase-harvest" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors shadow-lg flex items-center">
-              <i class="fa fa-plus mr-2"></i> 增加采收量
-            </button>
-           </div>
-        </div>
-      </div>
-      
-      <!-- 今日采收详情统计 -->
-      <div class="mt-6 bg-white rounded-xl p-6 card-shadow">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold">采收记录</h3>
-          <div class="flex space-x-2 mt-2 md:mt-0">
-            <button class="bg-gray-100 hover:bg-gray-200 text-neutral-dark px-4 py-2 rounded-lg transition-colors">
-              <i class="fa fa-download mr-1"></i> 导出数据
-            </button>
-          </div>
-        </div>
-        
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日期</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">预计产量</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">实际产量</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">差异</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200" id="harvest-table-body">
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap">2023-10-26</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,200 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,280 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="text-green-500">+6.7%</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap">2023-10-25</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,300 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,350 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="text-green-500">+3.8%</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap">2023-10-24</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,100 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">1,050 kg</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="text-red-500">-4.5%</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- 风险统计区域 (已简化) -->
+    
+    <!-- 风险统计区域  -->
     <section id="risk" class="mb-16">
       <h2 class="text-2xl font-bold mb-8 flex items-center">
         <i class="fa fa-exclamation-triangle text-primary mr-2"></i> 风险监控
@@ -441,4 +361,5 @@
   </script>
 </body>
 </html>
+
 
