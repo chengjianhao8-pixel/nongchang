@@ -48,7 +48,7 @@
       .stat-number {
         @apply text-3xl md:text-4xl font-bold text-primary;
       }
-      <!-- 移除hover:scale-110，取消图标放大效果 -->
+      /* 移除所有缩放相关样式，确保图标大小不变 */
       .clickable-icon {
         @apply cursor-pointer hover:bg-green-200 transition-all duration-300;
       }
@@ -125,7 +125,7 @@
                 <i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较上周</span>
               </p>
             </div>
-            <!-- 移除title提示，保留其他属性 -->
+            <!-- 完全移除title提示，仅保留必要属性 -->
             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary clickable-icon" 
                  id="harvest-icon">
               <i class="fa fa-scissors text-xl"></i>
@@ -242,7 +242,7 @@
       mobileMenu.classList.toggle('hidden');
     });
 
-    // 采收量增加功能（改为点击剪刀图标触发）
+    // 采收量增加功能（点击剪刀图标触发）
     const harvestCountEl = document.getElementById('harvest-count');
     const harvestIcon = document.getElementById('harvest-icon');
     const harvestTrendEl = document.getElementById('harvest-trend');
@@ -250,27 +250,19 @@
     let harvestCount = 0;
     let lastWeekCount = 0; // 上周数据，用于计算增长率
     
-    // 点击图标触发增加功能
     harvestIcon.addEventListener('click', function() {
       // 增加1颗
       harvestCount++;
       
-      // 更新显示并添加动画效果
+      // 更新显示并添加数字脉冲动画
       harvestCountEl.innerText = harvestCount.toLocaleString();
       harvestCountEl.classList.add('number-pulse');
       setTimeout(() => {
         harvestCountEl.classList.remove('number-pulse');
       }, 500);
       
-      // 图标点击反馈动画（保持点击时的缩小效果，不添加放大效果）
-      this.classList.add('scale-90');
-      setTimeout(() => {
-        this.classList.remove('scale-90');
-      }, 200);
-      
       // 更新增长率（假设上周是初始值0）
       if (lastWeekCount === 0 && harvestCount > 0) {
-        // 从0开始增长时，显示100%
         harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 100% <span class="text-gray-500 ml-1">较上周</span>';
       } else if (harvestCount > lastWeekCount) {
         const growthRate = Math.round(((harvestCount - lastWeekCount) / lastWeekCount) * 100);
@@ -292,7 +284,7 @@
             behavior: 'smooth'
           });
           
-          // 如果是移动端，点击后关闭菜单
+          // 移动端点击后关闭菜单
           const mobileMenu = document.getElementById('mobile-menu');
           if (!mobileMenu.classList.contains('hidden')) {
             mobileMenu.classList.add('hidden');
