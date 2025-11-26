@@ -64,38 +64,8 @@
   </style>
 </head>
 <body class="bg-gray-50 font-sans text-neutral-dark">
-  <!-- 导航栏 -->
-  <header class="fixed w-full bg-white bg-opacity-95 shadow-sm z-50 transition-all duration-300" id="navbar">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <i class="fa fa-leaf text-primary text-2xl mr-2"></i>
-          <span class="font-bold text-xl">智慧农场</span>
-        </div>
-        <nav class="hidden md:flex items-center space-x-8">
-          <a href="#dashboard" class="text-neutral-dark hover:text-primary transition-colors">数据概览</a>
-          <a href="#harvest" class="text-neutral-dark hover:text-primary transition-colors">采收统计</a>
-          <a href="#risk" class="text-neutral-dark hover:text-primary transition-colors">风险监控</a>
-        </nav>
-        <!-- 移动端菜单按钮 -->
-        <button class="md:hidden flex items-center" id="mobile-menu-button">
-          <i class="fa fa-bars text-neutral-dark text-xl"></i>
-        </button>
-      </div>
-    </div>
-    
-    <!-- 移动端菜单 -->
-    <div class="md:hidden hidden bg-white shadow-lg absolute w-full" id="mobile-menu">
-      <div class="px-4 py-4 space-y-3">
-        <a href="#dashboard" class="block text-neutral-dark hover:text-primary transition-colors">数据概览</a>
-        <a href="#harvest" class="block text-neutral-dark hover:text-primary transition-colors">采收统计</a>
-        <a href="#risk" class="block text-neutral-dark hover:text-primary transition-colors">风险监控</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- 主内容区 -->
-  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+  <!-- 主内容区（移除导航栏后，调整顶部内边距） -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
     <!-- 欢迎区域 -->
     <section class="mb-12 text-center">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-neutral-dark mb-4">
@@ -112,11 +82,11 @@
         <i class="fa fa-dashboard text-primary mr-2"></i> 数据概览
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- 总采收量 -->
+        <!-- 总采收量（移除"白菜"字样） -->
         <div class="bg-white rounded-xl p-6 card-shadow card-hover">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-gray-500 mb-1">白菜总采收量</p>
+              <p class="text-gray-500 mb-1">总采收量</p>
               <!-- 移除数字的可点击类，保留显示效果 -->
               <p class="stat-number" id="total-harvest">
                 <span id="harvest-count">0</span> <span class="text-lg font-normal">颗</span>
@@ -163,7 +133,8 @@
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-6 md:mb-0">
                 <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
-                <p class="text-gray-500 max-w-md">基于实时环境数据（温度、湿度、土壤等）综合计算得出的风险指数。</p>
+                <!-- 修改描述文字为用户要求的内容 -->
+                <p class="text-gray-500 max-w-md">基于用户定位的气象网站数据综合计算得出的风险指数。</p>
             </div>
             <div class="flex items-center space-x-6">
                 <div class="text-center">
@@ -215,24 +186,6 @@
 
   <!-- JavaScript -->
   <script>
-    // 导航栏滚动效果
-    window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 10) {
-        navbar.classList.add('shadow-md');
-        navbar.classList.remove('shadow-sm');
-      } else {
-        navbar.classList.add('shadow-sm');
-        navbar.classList.remove('shadow-md');
-      }
-    });
-
-    // 移动端菜单切换
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenu.classList.toggle('hidden');
-    });
-
     // 采收量增加功能（点击剪刀图标触发）
     const harvestCountEl = document.getElementById('harvest-count');
     const harvestIcon = document.getElementById('harvest-icon');
@@ -261,7 +214,7 @@
       }
     });
 
-    // 平滑滚动
+    // 平滑滚动（保留页面内锚点跳转功能）
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -271,15 +224,9 @@
         
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.offsetTop - 80, // 减去导航栏高度
+            top: targetElement.offsetTop - 20, // 调整偏移量，适配无导航栏布局
             behavior: 'smooth'
           });
-          
-          // 移动端点击后关闭菜单
-          const mobileMenu = document.getElementById('mobile-menu');
-          if (!mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
-          }
         }
       });
     });
