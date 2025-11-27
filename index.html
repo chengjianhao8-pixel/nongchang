@@ -126,13 +126,13 @@
         <div class="bg-white rounded-xl p-6 card-shadow card-hover">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-gray-500 mb-1">总采收量</p>
+              <p class="text-gray-500 mb-1">今日采收量</p>
               <!-- 移除数字的可点击类，保留显示效果 -->
               <p class="stat-number" id="total-harvest">
                 <span id="harvest-count">0</span> <span class="text-lg font-normal">颗</span>
               </p>
               <p class="text-sm text-green-500 flex items-center mt-2" id="harvest-trend">
-                <i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较上周</span>
+                <i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
               </p>
             </div>
             <!-- 完全移除title提示，仅保留必要属性 -->
@@ -279,33 +279,98 @@
       }
     });
 
-    // 采收量增加功能（点击剪刀图标触发）
+    // 采收量持久化存储 + 每日00:00重置功能
     const harvestCountEl = document.getElementById('harvest-count');
     const harvestIcon = document.getElementById('harvest-icon');
     const harvestTrendEl = document.getElementById('harvest-trend');
     
-    let harvestCount = 0;
-    let lastWeekCount = 0; // 上周数据，用于计算增长率
+    // 存储键名定义
+    const STORAGE_KEY = 'dailyHarvestData';
+    // 获取当前日期（YYYY-MM-DD格式）
+    function getCurrentDate() {
+      return new Date().toISOString().split('T')[0];
+    }
     
+    // 初始化采收量数据
+    let harvestData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      count: 0,          // 今日采收量
+      date: getCurrentDate(),  // 数据存储日期
+      yesterdayCount: 0  // 昨日采收量（用于计算增长率）
+    };
+    
+    // 检查是否需要重置（跨天判断）
+    function checkAndResetHarvest() {
+      const today = getCurrentDate();
+      if (harvestData.date !== today) {
+        // 跨天了，将今日数据转为昨日数据，重置今日计数
+        harvestData.yesterdayCount = harvestData.count;
+        harvestData.count = 0;
+        harvestData.date = today;
+        // 保存到本地存储
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
+      }
+      // 更新页面显示
+      updateHarvestDisplay();
+    }
+    
+    // 更新采收量显示和增长率
+    function updateHarvestDisplay() {
+      harvestCountEl.innerText = harvestData.count.toLocaleString();
+      
+      // 计算增长率（较昨日）
+      if (harvestData.yesterdayCount === 0) {
+        if (harvestData.count > 0) {
+          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 100% <span class="text-gray-500 ml-1">较昨日</span>';
+        } else {
+          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>';
+        }
+      } else {
+        const growthRate = Math.round(((harvestData.count - harvestData.yesterdayCount) / harvestData.yesterdayCount) * 100);
+        if (growthRate >= 0) {
+          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1"></i> ${growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
+        } else {
+          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1"></i> ${Math.abs(growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
+        }
+      }
+    }
+    
+    // 增加采收量功能
     harvestIcon.addEventListener('click', function() {
-      // 增加1颗
-      harvestCount++;
+      harvestData.count++;
       
       // 更新显示并添加数字脉冲动画
-      harvestCountEl.innerText = harvestCount.toLocaleString();
+      harvestCountEl.innerText = harvestData.count.toLocaleString();
       harvestCountEl.classList.add('number-pulse');
       setTimeout(() => {
         harvestCountEl.classList.remove('number-pulse');
       }, 500);
       
-      // 更新增长率（假设上周是初始值0）
-      if (lastWeekCount === 0 && harvestCount > 0) {
-        harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 100% <span class="text-gray-500 ml-1">较上周</span>';
-      } else if (harvestCount > lastWeekCount) {
-        const growthRate = Math.round(((harvestCount - lastWeekCount) / lastWeekCount) * 100);
-        harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1"></i> ${growthRate}% <span class="text-gray-500 ml-1">较上周</span>`;
-      }
+      // 保存到本地存储
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
+      
+      // 更新增长率
+      updateHarvestDisplay();
     });
+    
+    // 初始化页面时执行：检查是否跨天 + 更新显示
+    checkAndResetHarvest();
+    
+    // 设置定时器，每天00:00:01触发重置检查（防止跨天未刷新页面的情况）
+    function setDailyResetTimer() {
+      const now = new Date();
+      // 计算当前时间到次日00:00:01的毫秒数
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const timeToMidnight = tomorrow.getTime() - now.getTime() + 1000; // +1秒确保过了00:00
+      
+      // 定时器触发后，检查并重置，然后重新设置下一天的定时器
+      setTimeout(() => {
+        checkAndResetHarvest();
+        setDailyResetTimer(); // 循环设置定时器
+      }, timeToMidnight);
+    }
+    
+    // 启动每日重置定时器
+    setDailyResetTimer();
 
     // 平滑滚动（保留页面内锚点跳转功能）
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
