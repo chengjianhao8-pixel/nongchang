@@ -1,1 +1,267 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能播种车 - 智慧农场管理平台</title>
+  <!-- 引入外部资源（与主页面一致） -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind CSS 配置（与主页面完全一致） -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#22c55e',     // 主色调：绿色（农业）
+            secondary: '#3b82f6',   // 辅助色：蓝色（科技）
+            accent: '#f97316',      // 强调色：橙色（活力）
+            neutral: '#f3f4f6',     // 中性色：浅灰
+            'neutral-dark': '#1f2937' // 中性深色
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类（与主页面完全一致） -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-shadow {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .vehicle-img-container {
+        @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center;
+      }
+      .vehicle-param {
+        @apply flex justify-between items-center py-3 border-b border-gray-100;
+      }
+      .feature-item {
+        @apply flex items-start mb-4;
+      }
+      .feature-icon {
+        @apply flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-neutral-dark">
+  <!-- 主内容区（与主页面布局一致） -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+    <!-- 头部区域（更新按钮文字，保持链接指向index.html） -->
+    <section class="mb-12">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+        <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-neutral-dark">
+          智能<span class="text-secondary">播种车</span>
+        </h1>
+        <!-- 按钮文字改为"进入管理系统"，链接仍指向index.html -->
+        <a href="index.html" class="flex items-center text-secondary hover:text-primary transition-colors bg-white px-4 py-2 rounded-lg card-shadow">
+          <i class="fa fa-arrow-left mr-2"></i>
+          <span>进入管理系统</span>
+        </a>
+      </div>
+      <p class="text-lg text-gray-600 max-w-3xl">
+        智慧农场核心种植设备，集自动化、精准化、智能化于一体，大幅提升播种效率与出苗质量
+      </p>
+    </section>
+
+    <!-- 车辆详细展示区域 -->
+    <section class="mb-16">
+      <div class="bg-white rounded-xl overflow-hidden card-shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <!-- 车辆图片区域（指定图片路径img/che1.png） -->
+          <div class="vehicle-img-container h-80 lg:h-auto">
+            <img src="img/che1.png" alt="智能播种车" class="w-full h-full object-cover">
+          </div>
+          
+          <!-- 车辆核心信息（删除节能环保等4个优势标签） -->
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-neutral-dark mb-6">核心参数</h2>
+            <div class="space-y-1">
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">作业效率</span>
+                <span class="font-medium text-neutral-dark">15亩/小时（比传统设备提升300%）</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">动力类型</span>
+                <span class="font-medium text-neutral-dark">纯电动（续航200km）</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">控制方式</span>
+                <span class="font-medium text-neutral-dark">APP远程控制 + 自动巡航 + 手动备份</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">播种精度</span>
+                <span class="font-medium text-neutral-dark">株距误差≤±1cm，深度误差≤±0.5cm</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">适用作物</span>
+                <span class="font-medium text-neutral-dark">蔬菜、谷物、油料等多种作物</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">作业宽度</span>
+                <span class="font-medium text-neutral-dark">2.4米（可折叠设计，便于运输）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 车辆核心功能/优势区域 -->
+    <section class="mb-16">
+      <div class="bg-white rounded-xl p-8 card-shadow">
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+          <i class="fa fa-star text-accent mr-2"></i> 核心功能
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-crosshairs"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">精准播种控制系统</h3>
+              <p class="text-gray-600">基于GPS定位与土壤传感器数据，自动调节播种密度、深度和株距，适配不同作物生长需求，出苗率提升至95%以上。</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-wifi"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">远程智能控制</h3>
+              <p class="text-gray-600">支持手机APP远程设定作业参数、规划作业路径，实时查看作业进度和设备状态，无需现场值守，节省人工成本。</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-shield"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">多重安全保障</h3>
+              <p class="text-gray-600">配备超声波避障、电子围栏、低电量自动返航等功能，避免碰撞损坏设备，确保作业安全稳定。</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-bar-chart"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">数据化管理</h3>
+              <p class="text-gray-600">自动记录播种面积、种子用量、作业时间等数据，生成种植报表，为后续田间管理和产量预测提供数据支持。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 使用说明区域 -->
+    <section class="mb-8">
+      <div class="bg-white rounded-xl p-8 card-shadow">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <i class="fa fa-info-circle text-secondary mr-2"></i> 使用须知
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">操作准备</h3>
+              <p class="text-gray-600">作业前需通过APP完成地块边界设定、作物类型选择和播种参数配置，确保设备信号正常。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">维护保养</h3>
+              <p class="text-gray-600">每日作业后清洁播种器和传感器，每周检查电池状态和轮胎气压，每月进行一次全面设备检测。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">安全规范</h3>
+              <p class="text-gray-600">设备作业时，禁止人员进入作业区域；雨天、大风等恶劣天气请勿使用，避免设备故障。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">技术支持</h3>
+              <p class="text-gray-600">提供24小时在线技术支持，设备质保2年，终身维护，可通过APP或客服热线联系售后。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚（删除车辆图标链接） -->
+  <footer class="bg-neutral-dark text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <div class="flex items-center">
+            <i class="fa fa-leaf text-primary text-2xl mr-2"></i>
+            <span class="font-bold text-xl">智慧农场</span>
+          </div>
+          <p class="text-gray-400 mt-2">提升农业生产效率与质量</p>
+        </div>
+        <div class="flex space-x-6">
+          <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank">
+            <i class="fa fa-envelope text-2xl"></i>
+          </a>
+          <!-- 已删除车辆图标链接 -->
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript（保持主页面必要功能） -->
+  <script>
+    // 平滑滚动（保持与主页面一致）
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 20,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
