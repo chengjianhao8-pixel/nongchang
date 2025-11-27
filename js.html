@@ -28,7 +28,7 @@
     }
   </script>
   
-  <!-- 自定义工具类（与主页面完全一致） -->
+  <!-- 自定义工具类（新增翻页按钮样式） -->
   <style type="text/tailwindcss">
     @layer utilities {
       .content-auto {
@@ -45,7 +45,7 @@
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       }
       .vehicle-img-container {
-        @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center;
+        @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative;
       }
       .vehicle-param {
         @apply flex justify-between items-center py-3 border-b border-gray-100;
@@ -55,6 +55,18 @@
       }
       .feature-icon {
         @apply flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1;
+      }
+      .slide-btn {
+        @apply absolute w-10 h-10 rounded-full bg-white/80 text-secondary hover:bg-secondary hover:text-white transition-all duration-300 flex items-center justify-center shadow-md z-10;
+      }
+      .slide-indicator {
+        @apply absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10;
+      }
+      .indicator-dot {
+        @apply w-2 h-2 rounded-full bg-white/60 hover:bg-white transition-all duration-300;
+      }
+      .indicator-dot.active {
+        @apply bg-secondary w-4;
       }
     }
   </style>
@@ -83,9 +95,29 @@
     <section class="mb-16">
       <div class="bg-white rounded-xl overflow-hidden card-shadow">
         <div class="grid grid-cols-1 lg:grid-cols-2">
-          <!-- 车辆图片区域（指定图片路径img/che1.png） -->
+          <!-- 车辆图片翻页区域（包含5张图片切换） -->
           <div class="vehicle-img-container h-80 lg:h-auto">
-            <img src="img/che1.png" alt="智能播种车" class="w-full h-full object-cover">
+            <!-- 图片元素（初始显示che1.png） -->
+            <img id="vehicle-img" src="img/che1.png" alt="智能播种车" class="w-full h-full object-cover transition-opacity duration-500">
+            
+            <!-- 左翻页按钮 -->
+            <button id="prev-btn" class="slide-btn left-4" aria-label="上一张图片">
+              <i class="fa fa-angle-left text-xl"></i>
+            </button>
+            
+            <!-- 右翻页按钮 -->
+            <button id="next-btn" class="slide-btn right-4" aria-label="下一张图片">
+              <i class="fa fa-angle-right text-xl"></i>
+            </button>
+            
+            <!-- 图片索引指示器 -->
+            <div class="slide-indicator">
+              <span class="indicator-dot active" data-index="0"></span>
+              <span class="indicator-dot" data-index="1"></span>
+              <span class="indicator-dot" data-index="2"></span>
+              <span class="indicator-dot" data-index="3"></span>
+              <span class="indicator-dot" data-index="4"></span>
+            </div>
           </div>
           
           <!-- 车辆核心信息（删除节能环保等4个优势标签） -->
@@ -244,8 +276,76 @@
     </div>
   </footer>
 
-  <!-- JavaScript（保持主页面必要功能） -->
+  <!-- 图片翻页功能JavaScript -->
   <script>
+    // 图片路径数组（包含5张图片）
+    const imgUrls = [
+      'img/che1.png',
+      'img/che2.png',
+      'img/che3.png',
+      'img/che4.png',
+      'img/che5.png'
+    ];
+    
+    // DOM元素
+    const imgElement = document.getElementById('vehicle-img');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const indicators = document.querySelectorAll('.indicator-dot');
+    let currentIndex = 0; // 当前图片索引
+    
+    // 更新图片显示和指示器状态
+    function updateImage() {
+      imgElement.style.opacity = '0';
+      // 图片加载完成后显示
+      imgElement.onload = function() {
+        imgElement.style.opacity = '1';
+      };
+      imgElement.src = imgUrls[currentIndex];
+      imgElement.alt = `智能播种车（${currentIndex + 1}/5）`;
+      
+      // 更新指示器
+      indicators.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+    
+    // 上一张图片
+    prevBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex - 1 + imgUrls.length) % imgUrls.length;
+      updateImage();
+    });
+    
+    // 下一张图片
+    nextBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex + 1) % imgUrls.length;
+      updateImage();
+    });
+    
+    // 点击指示器切换图片
+    indicators.forEach((dot, index) => {
+      dot.addEventListener('click', function() {
+        currentIndex = index;
+        updateImage();
+      });
+    });
+    
+    // 键盘左右键控制翻页
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        prevBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        nextBtn.click();
+      }
+    });
+    
+    // 初始化显示第一张图片
+    updateImage();
+
     // 平滑滚动（保持与主页面一致）
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
