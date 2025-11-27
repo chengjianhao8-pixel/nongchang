@@ -60,10 +60,50 @@
         50% { transform: scale(1.1); }
         100% { transform: scale(1); }
       }
+      /* 弹窗样式 */
+      .modal-overlay {
+        @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300;
+      }
+      .modal-container {
+        @apply bg-white rounded-xl p-6 md:p-8 max-w-md w-full mx-4 card-shadow transform transition-transform duration-300 scale-100;
+      }
+      .modal-header {
+        @apply flex justify-between items-center mb-4 pb-2 border-b border-gray-100;
+      }
     }
   </style>
 </head>
 <body class="bg-gray-50 font-sans text-neutral-dark">
+  <!-- 更新日志弹窗 -->
+  <div id="update-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
+          <i class="fa fa-info-circle text-secondary mr-2"></i> 更新日志
+        </h3>
+        <button id="close-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-4">
+          <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
+            Beta 1.0
+          </span>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+              <span class="text-gray-700">更新基本框架，包含数据概览、风险监控、车辆介绍模块</span>
+            </li>
+          </ul>
+        </div>
+        <button id="confirm-modal" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+          我知道了
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- 主内容区（移除导航栏后，调整顶部内边距） -->
   <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
     <!-- 欢迎区域 -->
@@ -207,6 +247,38 @@
 
   <!-- JavaScript -->
   <script>
+    // 弹窗功能逻辑
+    const modal = document.getElementById('update-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const confirmModalBtn = document.getElementById('confirm-modal');
+    
+    // 检查是否已关闭过弹窗（本地存储记录）
+    if (localStorage.getItem('updateModalClosed') === 'true') {
+      modal.style.display = 'none';
+    }
+    
+    // 关闭弹窗函数
+    function closeModal() {
+      modal.style.opacity = '0';
+      modal.querySelector('.modal-container').style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        modal.style.display = 'none';
+        // 记录关闭状态到本地存储
+        localStorage.setItem('updateModalClosed', 'true');
+      }, 300);
+    }
+    
+    // 绑定关闭事件
+    closeModalBtn.addEventListener('click', closeModal);
+    confirmModalBtn.addEventListener('click', closeModal);
+    
+    // 点击遮罩层关闭弹窗
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
     // 采收量增加功能（点击剪刀图标触发）
     const harvestCountEl = document.getElementById('harvest-count');
     const harvestIcon = document.getElementById('harvest-icon');
