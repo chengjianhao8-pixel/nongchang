@@ -47,6 +47,14 @@
       .vehicle-img-container {
         @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative;
       }
+      /* 统一图片容器宽高比：4:3 */
+      .img-aspect-container {
+        @apply w-full relative;
+        padding-bottom: 75%; /* 4:3 比例（高度=宽度*0.75） */
+      }
+      .img-aspect-content {
+        @apply absolute top-0 left-0 w-full h-full object-cover;
+      }
       .vehicle-param {
         @apply flex justify-between items-center py-3 border-b border-gray-100;
       }
@@ -98,18 +106,25 @@
     <section class="mb-16">
       <div class="bg-white rounded-xl overflow-hidden card-shadow">
         <div class="grid grid-cols-1 lg:grid-cols-2">
-          <!-- 车辆图片翻页区域（包含5张图片切换） -->
-          <div class="vehicle-img-container h-80 lg:h-auto">
-            <!-- 图片元素（初始显示che1.png） -->
-            <img id="vehicle-img" src="img/che1.png" alt="智能播种车" class="w-full h-full object-cover transition-opacity duration-500">
+          <!-- 车辆图片翻页区域（包含5张图片切换，统一4:3比例） -->
+          <div class="vehicle-img-container p-4 lg:p-8">
+            <!-- 图片容器（固定4:3比例） -->
+            <div class="img-aspect-container">
+              <img id="vehicle-img" src="img/che1.png" alt="智能播种车" class="img-aspect-content transition-opacity duration-500">
+              <!-- 图片加载失败备用显示 -->
+              <div id="img-fallback" class="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-500 hidden">
+                <i class="fa fa-truck text-4xl mr-3"></i>
+                <span>图片加载失败</span>
+              </div>
+            </div>
             
             <!-- 左翻页按钮 -->
-            <button id="prev-btn" class="slide-btn left-4" aria-label="上一张图片">
+            <button id="prev-btn" class="slide-btn left-4 lg:left-8" aria-label="上一张图片">
               <i class="fa fa-angle-left text-xl"></i>
             </button>
             
             <!-- 右翻页按钮 -->
-            <button id="next-btn" class="slide-btn right-4" aria-label="下一张图片">
+            <button id="next-btn" class="slide-btn right-4 lg:right-8" aria-label="下一张图片">
               <i class="fa fa-angle-right text-xl"></i>
             </button>
             
@@ -281,7 +296,7 @@
     </div>
   </footer>
 
-  <!-- 图片翻页功能JavaScript -->
+  <!-- 图片翻页功能JavaScript（优化图片加载逻辑） -->
   <script>
     // 图片路径数组（包含5张图片）
     const imgUrls = [
@@ -294,20 +309,45 @@
     
     // DOM元素
     const imgElement = document.getElementById('vehicle-img');
+    const imgFallback = document.getElementById('img-fallback');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const indicators = document.querySelectorAll('.indicator-dot');
     let currentIndex = 0; // 当前图片索引
     
+    // 图片加载失败处理
+    imgElement.addEventListener('error', function() {
+      imgElement.style.display = 'none';
+      imgFallback.classList.remove('hidden');
+    });
+    
+    // 图片加载成功处理
+    imgElement.addEventListener('load', function() {
+      imgElement.style.display = 'block';
+      imgFallback.classList.add('hidden');
+    });
+    
     // 更新图片显示和指示器状态
     function updateImage() {
       imgElement.style.opacity = '0';
+      
       // 图片加载完成后显示
       imgElement.onload = function() {
         imgElement.style.opacity = '1';
+        imgElement.style.display = 'block';
+        imgFallback.classList.add('hidden');
       };
+      
+      // 图片路径设置
       imgElement.src = imgUrls[currentIndex];
       imgElement.alt = `智联采丰車（${currentIndex + 1}/5）`;
+      
+      // 处理加载失败情况
+      imgElement.onerror = function() {
+        imgElement.style.opacity = '1';
+        imgElement.style.display = 'none';
+        imgFallback.classList.remove('hidden');
+      };
       
       // 更新指示器
       indicators.forEach((dot, index) => {
