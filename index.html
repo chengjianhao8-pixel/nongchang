@@ -131,7 +131,7 @@
               <p class="stat-number" id="total-harvest">
                 <span id="harvest-count">0</span> <span class="text-lg font-normal">颗</span>
               </p>
-              <p class="text-sm text-green-500 flex items-center mt-2" id="harvest-trend">
+              <p class="text-sm flex items-center mt-2" id="harvest-trend">
                 <i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
               </p>
             </div>
@@ -313,23 +313,38 @@
       updateHarvestDisplay();
     }
     
-    // 更新采收量显示和增长率
+    // 更新采收量显示和增长率（核心修改：动态切换颜色）
     function updateHarvestDisplay() {
       harvestCountEl.innerText = harvestData.count.toLocaleString();
       
       // 计算增长率（较昨日）
       if (harvestData.yesterdayCount === 0) {
         if (harvestData.count > 0) {
-          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 100% <span class="text-gray-500 ml-1">较昨日</span>';
+          // 上升：绿色
+          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1 text-green-500"></i> 100% <span class="text-gray-500 ml-1">较昨日</span>';
+          harvestTrendEl.classList.remove('text-red-500');
+          harvestTrendEl.classList.add('text-green-500');
         } else {
-          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>';
+          // 无变化：默认颜色
+          harvestTrendEl.innerHTML = '<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>';
+          harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
         }
       } else {
         const growthRate = Math.round(((harvestData.count - harvestData.yesterdayCount) / harvestData.yesterdayCount) * 100);
-        if (growthRate >= 0) {
-          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1"></i> ${growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
+        if (growthRate > 0) {
+          // 上升：绿色
+          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
+          harvestTrendEl.classList.remove('text-red-500');
+          harvestTrendEl.classList.add('text-green-500');
+        } else if (growthRate < 0) {
+          // 下降：红色
+          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1 text-red-500"></i> ${Math.abs(growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
+          harvestTrendEl.classList.remove('text-green-500');
+          harvestTrendEl.classList.add('text-red-500');
         } else {
-          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1"></i> ${Math.abs(growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
+          // 持平：灰色
+          harvestTrendEl.innerHTML = `<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>`;
+          harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
         }
       }
     }
@@ -391,4 +406,3 @@
   </script>
 </body>
 </html>
-
