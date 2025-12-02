@@ -4,21 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>智慧农场 - 车辆介绍</title>
-  <!-- 引入外部资源（与主页面一致） -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
-  <!-- Tailwind CSS 配置（与主页面完全一致） -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#22c55e',     // 主色调：绿色（农业）
-            secondary: '#3b82f6',   // 辅助色：蓝色（科技）
-            accent: '#f97316',      // 强调色：橙色（活力）
-            neutral: '#f3f4f6',     // 中性色：浅灰
-            'neutral-dark': '#1f2937' // 中性深色
+            primary: '#22c55e',
+            secondary: '#3b82f6',
+            accent: '#f97316',
+            neutral: '#f3f4f6',
+            'neutral-dark': '#1f2937'
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -28,7 +26,6 @@
     }
   </script>
   
-  <!-- 自定义工具类（新增翻页按钮样式） -->
   <style type="text/tailwindcss">
     @layer utilities {
       .content-auto {
@@ -47,10 +44,9 @@
       .vehicle-img-container {
         @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative;
       }
-      /* 统一图片容器宽高比：4:3 */
       .img-aspect-container {
         @apply w-full relative;
-        padding-bottom: 75%; /* 4:3 比例（高度=宽度*0.75） */
+        padding-bottom: 75%;
       }
       .img-aspect-content {
         @apply absolute top-0 left-0 w-full h-full object-cover;
@@ -83,15 +79,12 @@
   </style>
 </head>
 <body class="bg-gray-50 font-sans text-neutral-dark">
-  <!-- 主内容区（与主页面布局一致） -->
   <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-    <!-- 头部区域（更新按钮文字，保持链接指向index.html） -->
     <section class="mb-12">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
         <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-neutral-dark">
           智联<span class="text-secondary">采丰车</span>
         </h1>
-        <!-- 按钮文字改为"进入管理系统"，链接仍指向index.html -->
         <a href="index.html" class="flex items-center text-secondary hover:text-primary transition-colors bg-white px-4 py-2 rounded-lg card-shadow">
           <i class="fa fa-arrow-left mr-2"></i>
           <span>进入管理系统</span>
@@ -102,33 +95,26 @@
       </p>
     </section>
 
-    <!-- 车辆详细展示区域 -->
     <section class="mb-16">
       <div class="bg-white rounded-xl overflow-hidden card-shadow">
         <div class="grid grid-cols-1 lg:grid-cols-2">
-          <!-- 车辆图片翻页区域（包含5张图片切换，统一4:3比例） -->
           <div class="vehicle-img-container p-4 lg:p-8">
-            <!-- 图片容器（固定4:3比例） -->
             <div class="img-aspect-container">
               <img id="vehicle-img" src="img/che1.png" alt="智能播种车" class="img-aspect-content transition-opacity duration-500">
-              <!-- 图片加载失败备用显示 -->
               <div id="img-fallback" class="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-500 hidden">
                 <i class="fa fa-truck text-4xl mr-3"></i>
                 <span>图片加载失败</span>
               </div>
             </div>
             
-            <!-- 左翻页按钮 -->
             <button id="prev-btn" class="slide-btn left-4 lg:left-8" aria-label="上一张图片">
               <i class="fa fa-angle-left text-xl"></i>
             </button>
             
-            <!-- 右翻页按钮 -->
             <button id="next-btn" class="slide-btn right-4 lg:right-8" aria-label="下一张图片">
               <i class="fa fa-angle-right text-xl"></i>
             </button>
             
-            <!-- 图片索引指示器 -->
             <div class="slide-indicator">
               <span class="indicator-dot active" data-index="0"></span>
               <span class="indicator-dot" data-index="1"></span>
@@ -138,7 +124,6 @@
             </div>
           </div>
           
-          <!-- 车辆核心信息（删除节能环保等4个优势标签） -->
           <div class="p-8">
             <h2 class="text-2xl font-bold text-neutral-dark mb-6">核心参数</h2>
             <div class="space-y-1">
@@ -159,11 +144,14 @@
                 <span class="font-medium text-neutral-dark">株距误差≤±1cm，深度误差≤±0.5cm</span>
               </div>
               <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">收获精度</span>
+                <span class="font-medium text-neutral-dark">收获效率达人工的1.5倍，损伤率低于5%</span>
+              </div>
+              <div class="vehicle-param">
                 <span class="text-gray-500 w-1/3">适用作物</span>
                 <span class="font-medium text-neutral-dark">蔬菜、谷物、油料等多种作物</span>
               </div>
               
-              <!-- 新增：用户手册 SKCON9 下载链接 -->
               <a href="user/SKCON9_User_Guide.pdf" target="_blank" class="manual-link">
                 <i class="fa fa-file-pdf-o mr-2"></i>
                 <span>用户手册 SKCON9</span>
@@ -174,7 +162,6 @@
       </div>
     </section>
 
-    <!-- 车辆核心功能/优势区域 -->
     <section class="mb-16">
       <div class="bg-white rounded-xl p-8 card-shadow">
         <h2 class="text-2xl font-bold mb-8 flex items-center">
@@ -216,7 +203,7 @@
               <i class="fa fa-bar-chart"></i>
             </div>
             <div>
-              <h3 class="text-lg font-semibold mb-2">网站快捷管理</h3>
+              <h3 class="text-lg font-semibold mb-2">网站管理</h3>
               <p class="text-gray-600">拥有独立的管理网站，核心技术使用局域网连接主板，全平台首次实现，实现了采集数据无缝同步（网络情况好的情况下低至16ms）。</p>
             </div>
           </div>
@@ -224,7 +211,6 @@
       </div>
     </section>
 
-    <!-- 使用说明区域 -->
     <section class="mb-8">
       <div class="bg-white rounded-xl p-8 card-shadow">
         <h2 class="text-2xl font-bold mb-6 flex items-center">
@@ -275,7 +261,6 @@
     </section>
   </main>
 
-  <!-- 页脚（删除车辆图标链接） -->
   <footer class="bg-neutral-dark text-white py-12">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
@@ -290,15 +275,12 @@
           <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank">
             <i class="fa fa-envelope text-2xl"></i>
           </a>
-          <!-- 已删除车辆图标链接 -->
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- 图片翻页功能JavaScript（优化图片加载逻辑） -->
   <script>
-    // 图片路径数组（包含5张图片）
     const imgUrls = [
       'img/che1.png',
       'img/che2.png',
@@ -307,49 +289,41 @@
       'img/9.jpeg'
     ];
     
-    // DOM元素
     const imgElement = document.getElementById('vehicle-img');
     const imgFallback = document.getElementById('img-fallback');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const indicators = document.querySelectorAll('.indicator-dot');
-    let currentIndex = 0; // 当前图片索引
+    let currentIndex = 0;
     
-    // 图片加载失败处理
     imgElement.addEventListener('error', function() {
       imgElement.style.display = 'none';
       imgFallback.classList.remove('hidden');
     });
     
-    // 图片加载成功处理
     imgElement.addEventListener('load', function() {
       imgElement.style.display = 'block';
       imgFallback.classList.add('hidden');
     });
     
-    // 更新图片显示和指示器状态
     function updateImage() {
       imgElement.style.opacity = '0';
       
-      // 图片加载完成后显示
       imgElement.onload = function() {
         imgElement.style.opacity = '1';
         imgElement.style.display = 'block';
         imgFallback.classList.add('hidden');
       };
       
-      // 图片路径设置
       imgElement.src = imgUrls[currentIndex];
       imgElement.alt = `智联采丰車（${currentIndex + 1}/5）`;
       
-      // 处理加载失败情况
       imgElement.onerror = function() {
         imgElement.style.opacity = '1';
         imgElement.style.display = 'none';
         imgFallback.classList.remove('hidden');
       };
       
-      // 更新指示器
       indicators.forEach((dot, index) => {
         if (index === currentIndex) {
           dot.classList.add('active');
@@ -359,19 +333,16 @@
       });
     }
     
-    // 上一张图片
     prevBtn.addEventListener('click', function() {
       currentIndex = (currentIndex - 1 + imgUrls.length) % imgUrls.length;
       updateImage();
     });
     
-    // 下一张图片
     nextBtn.addEventListener('click', function() {
       currentIndex = (currentIndex + 1) % imgUrls.length;
       updateImage();
     });
     
-    // 点击指示器切换图片
     indicators.forEach((dot, index) => {
       dot.addEventListener('click', function() {
         currentIndex = index;
@@ -379,7 +350,6 @@
       });
     });
     
-    // 键盘左右键控制翻页
     document.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowLeft') {
         prevBtn.click();
@@ -388,10 +358,8 @@
       }
     });
     
-    // 初始化显示第一张图片
     updateImage();
 
-    // 平滑滚动（保持与主页面一致）
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
