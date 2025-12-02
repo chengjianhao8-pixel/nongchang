@@ -259,9 +259,9 @@
                 <i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
               </p>
             </div>
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary clickable-icon" 
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary" 
                  id="harvest-icon">
-              <i class="fa fa-scissors text-xl"></i>
+              <i class="fa fa-arrow-right text-xl"></i>
             </div>
           </div>
         </div>
@@ -602,13 +602,19 @@
       }
     }
     
-    harvestIcon.addEventListener('click', function() {
+    function increaseHarvestCount() {
       harvestData.count++;
       harvestCountEl.innerText = harvestData.count.toLocaleString();
       harvestCountEl.classList.add('number-pulse');
       setTimeout(() => harvestCountEl.classList.remove('number-pulse'), 500);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
       updateHarvestDisplay();
+    }
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.keyCode === 39) {
+        increaseHarvestCount();
+      }
     });
     
     checkAndResetHarvest();
