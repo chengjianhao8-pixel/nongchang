@@ -129,11 +129,11 @@
             </li>
             <li class="flex items-start">
               <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">提高网站的稳定性</span>
+              <span class="text-gray-700">提升网站稳定性</span>
             </li>
             <li class="flex items-start">
               <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">优化网站的流畅度</span>
+              <span class="text-gray-700">优化网站流畅度</span>
             </li>
           </ul>
         </div>
@@ -144,7 +144,7 @@
           <ul class="space-y-2">
             <li class="flex items-start">
               <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">更新基本框架，包含数据概览、风险监控、车辆介绍模块</span>
+              <span class="text-gray-700">搭建基础框架，包含数据概览、风险监控、车辆介绍模块</span>
             </li>
           </ul>
         </div>
@@ -168,9 +168,9 @@
       <div class="modal-body text-center">
         <div class="mb-6">
           <i class="fa fa-wifi text-5xl text-secondary mb-4"></i>
-          <p class="text-lg text-gray-800 font-medium mb-3">请确保电脑和主板已连接同一个无线网络。</p>
-          <p class="text-gray-600 mb-3">IP地址显示在主板所连接的无线网络列表中。</p>
-          <p class="text-gray-600">你可以打开主板“设置”模块，点击“WLAN”，查看已连接的无线网络。</p>
+          <p class="text-lg text-gray-800 font-medium mb-3">请确保电脑与主板已连接同一无线网络</p>
+          <p class="text-gray-600 mb-3">IP地址可在主板连接的无线网络列表中查看</p>
+          <p class="text-gray-600">你可打开主板"设置"模块，点击"WLAN"查看已连接网络</p>
         </div>
         <button id="confirm-connect-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
           连接
@@ -239,7 +239,7 @@
         智慧农场 <span class="text-primary">管理平台</span>
       </h1>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        实时监控生长数据，精准统计采收量，科学防控风险
+        实时监控生长数据，精准统计采收量，科学防控种植风险
       </p>
     </section>
 
@@ -256,7 +256,7 @@
                 <span id="harvest-count">0</span> <span class="text-lg font-normal">颗</span>
               </p>
               <p class="text-sm flex items-center mt-2" id="harvest-trend">
-                <i class="fa fa-arrow-up mr-1"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
+                <i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
               </p>
             </div>
             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary clickable-icon" 
@@ -306,7 +306,7 @@
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-6 md:mb-0">
                 <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
-                <p class="text-gray-500 max-w-md">基于用户定位的气象网站数据综合计算得出的风险指数。</p>
+                <p class="text-gray-500 max-w-md">基于定位地区气象数据综合计算得出的风险指数，助力科学防控</p>
             </div>
             <div class="flex items-center space-x-6">
                 <div class="text-center">
@@ -342,7 +342,7 @@
           <p class="text-gray-400 mt-2">提升农业生产效率与质量</p>
         </div>
         <div class="flex space-x-6">
-          <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank">
+          <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank" title="联系我们">
             <i class="fa fa-envelope text-2xl"></i>
           </a>
           <a href="javascript:;" class="text-gray-400 hover:text-white transition-colors" id="show-update-log" title="更新日志">
@@ -402,7 +402,7 @@
       connectBtn.classList.remove('connected');
       connectBtn.classList.add('default');
       
-      btnIcon.className = 'fa fa-times-circle connect-icon mr-2';
+      btnIcon.className = 'fa fa-plug connect-icon mr-2';
       btnText.textContent = '连接设备';
       
       ipDisplay.classList.add('hidden');
@@ -495,13 +495,8 @@
       
       if (e.target.value) {
         const isValid = validateIpFormat(e.target.value);
-        if (!isValid) {
-          ipAddressInput.classList.add('ip-input-error');
-          ipErrorMessage.classList.remove('hidden');
-        } else {
-          ipAddressInput.classList.remove('ip-input-error');
-          ipErrorMessage.classList.add('hidden');
-        }
+        ipAddressInput.classList.toggle('ip-input-error', !isValid);
+        ipErrorMessage.classList.toggle('hidden', isValid);
       } else {
         ipAddressInput.classList.remove('ip-input-error');
         ipErrorMessage.classList.add('hidden');
