@@ -230,7 +230,7 @@
     <section class="mb-12 text-center">
       <div class="flex justify-end mb-6">
         <button id="connect-device-btn" class="connect-btn default">
-          <i class="fa fa-plug connect-icon mr-2"></i>
+          <i class="fa fa-wifi connect-icon mr-2"></i>
           <span class="btn-text">连接设备</span>
           <span class="ip-display hidden"></span>
         </button>
@@ -261,7 +261,7 @@
             </div>
             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary" 
                  id="harvest-icon">
-              <i class="fa fa-arrow-right text-xl"></i>
+              <i class="fa fa-scissors text-xl"></i>
             </div>
           </div>
         </div>
@@ -271,9 +271,6 @@
             <div>
               <p class="text-gray-500 mb-1">当前 <a href="https://sh.weather.com.cn/" target="_blank" class="text-secondary hover:text-primary transition-colors">上海</a> 风险指数</p>
               <p class="stat-number text-green-500" id="risk-index">86</p>
-              <p class="text-sm text-green-500 flex items-center mt-2">
-                <i class="fa fa-arrow-up mr-1"></i> 8.3% <span class="text-gray-500 ml-1">较昨日</span>
-              </p>
             </div>
             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500">
               <i class="fa fa-check-circle text-xl"></i>
@@ -317,11 +314,11 @@
                 <div>
                     <div class="flex items-center mb-2">
                         <i class="fa fa-thermometer-half text-green-500 mr-2"></i>
-                        <span class="text-gray-700">温度风险: <span class="font-medium">中等</span></span>
+                        <span class="text-gray-700">温度风险: <span class="font-medium">低</span></span>
                     </div>
                     <div class="flex items-center">
                         <i class="fa fa-tint text-blue-500 mr-2"></i>
-                        <span class="text-gray-700">湿度风险: <span class="font-medium">低</span></span>
+                        <span class="text-gray-700">湿度风险: <span class="font-medium">中等</span></span>
                     </div>
                 </div>
             </div>
@@ -402,7 +399,7 @@
       connectBtn.classList.remove('connected');
       connectBtn.classList.add('default');
       
-      btnIcon.className = 'fa fa-plug connect-icon mr-2';
+      btnIcon.className = 'fa fa-wifi connect-icon mr-2';
       btnText.textContent = '连接设备';
       
       ipDisplay.classList.add('hidden');
@@ -611,8 +608,12 @@
       updateHarvestDisplay();
     }
     
+    // 监听任意方向键（上、下、左、右）
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight' || e.keyCode === 39) {
+      const directionKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+      const keyCodes = [38, 40, 37, 39]; // 对应方向键的keyCode
+      
+      if (directionKeys.includes(e.key) || keyCodes.includes(e.keyCode)) {
         increaseHarvestCount();
       }
     });
@@ -651,4 +652,3 @@
   </script>
 </body>
 </html>
-
