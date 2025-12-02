@@ -118,6 +118,19 @@
         </button>
       </div>
       <div class="modal-body">
+        <!-- 新增1.1版本日志 -->
+        <div class="mb-4">
+          <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
+            1.1
+          </span>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+              <span class="text-gray-700">新增WIFI连接设备功能</span>
+            </li>
+          </ul>
+        </div>
+        <!-- 原有Beta 1.0版本日志 -->
         <div class="mb-4">
           <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
             Beta 1.0
@@ -148,11 +161,14 @@
       </div>
       <div class="modal-body text-center">
         <div class="mb-6">
-          <i class="fa fa-plug text-5xl text-secondary mb-4"></i>
-          <p class="text-xl text-gray-800 font-medium">请连接设备</p>
+          <i class="fa fa-wifi text-5xl text-secondary mb-4"></i>
+          <!-- 替换原有提示文字为无线网络连接指引，隔行显示 -->
+          <p class="text-lg text-gray-800 font-medium mb-3">请确保电脑和主板已连接同一个无线网络。</p>
+          <p class="text-gray-600 mb-3">IP地址显示在主板所连接的无线网络列表中。</p>
+          <p class="text-gray-600">你可以打开主板“设置”模块，点击“WLAN”，查看已连接的无线网络。</p>
         </div>
         <button id="confirm-connect-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-          确认连接
+          连接
         </button>
       </div>
     </div>
@@ -171,7 +187,7 @@
       <div class="modal-body">
         <div class="mb-6">
           <label for="ip-address" class="block text-gray-700 mb-2 text-left">设备IP地址</label>
-          <input type="text" id="ip-address" placeholder="例如：192.168.1.100" 
+          <input type="text" id="ip-address" placeholder="例如：192.168.1.1" 
                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
           <p id="ip-error-message" class="text-danger text-sm mt-1 hidden">请输入正确的IP格式</p>
         </div>
