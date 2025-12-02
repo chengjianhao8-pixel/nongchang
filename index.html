@@ -47,6 +47,9 @@
       .stat-number {
         @apply text-3xl md:text-4xl font-bold text-primary;
       }
+      .risk-index-number {
+        @apply text-5xl md:text-6xl font-bold text-green-500;
+      }
       .clickable-icon {
         @apply cursor-pointer hover:bg-green-200 transition-all duration-300;
       }
@@ -265,33 +268,6 @@
             </div>
           </div>
         </div>
-        
-        <div class="bg-white rounded-xl p-6 card-shadow card-hover">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-gray-500 mb-1">当前 <a href="https://sh.weather.com.cn/" target="_blank" class="text-secondary hover:text-primary transition-colors">上海</a> 风险指数</p>
-              <p class="stat-number text-green-500" id="risk-index">86</p>
-            </div>
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500">
-              <i class="fa fa-check-circle text-xl"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-6 card-shadow card-hover">
-          <a href="js.html" target="_blank" class="flex items-center justify-between w-full">
-            <div>
-              <p class="text-gray-500 mb-1">农业设备</p>
-              <p class="text-2xl md:text-3xl font-bold text-secondary">车辆介绍</p>
-              <p class="text-sm text-blue-500 flex items-center mt-2">
-                <i class="fa fa-external-link mr-1"></i> 查看详情
-              </p>
-            </div>
-            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-secondary">
-              <i class="fa fa-car text-xl"></i>
-            </div>
-          </a>
-        </div>
       </div>
     </section>
     
@@ -303,14 +279,13 @@
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-6 md:mb-0">
                 <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
-                <p class="text-gray-500 max-w-md">基于定位地区气象数据综合计算得出的风险指数，助力科学防控</p>
+                <p class="text-gray-500 max-w-md">基于定位地区气象数据综合计算得出的风险评估，助力科学防控</p>
             </div>
-            <div class="flex items-center space-x-6">
-                <div class="text-center">
-                    <p class="text-6xl font-bold text-green-500" id="main-risk-index">86</p>
-                    <p class="text-gray-600 mt-1">当前 <a href="https://sh.weather.com.cn/" target="_blank" class="text-secondary hover:text-primary transition-colors">上海</a> 风险指数</p>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="text-center mb-6 md:mb-0 md:mr-10">
+                    <p class="risk-index-number" id="main-risk-index">86</p>
+                    <p class="text-gray-600 mt-1">综合风险指数</p>
                 </div>
-                <div class="h-20 w-px bg-gray-200"></div>
                 <div>
                     <div class="flex items-center mb-2">
                         <i class="fa fa-thermometer-half text-green-500 mr-2"></i>
@@ -324,6 +299,24 @@
             </div>
         </div>
      </div>
+    </section>
+
+    <!-- 车辆介绍模块移到风险监控下方 -->
+    <section id="equipment" class="mb-16">
+      <h2 class="text-2xl font-bold mb-8 flex items-center">
+        <i class="fa fa-car text-primary mr-2"></i> 设备
+      </h2>
+      <div class="bg-white rounded-xl p-8 card-shadow card-hover">
+        <a href="js.html" target="_blank" class="flex flex-col md:flex-row items-center justify-between w-full">
+          <div class="text-center md:text-left mb-6 md:mb-0">
+            <h3 class="text-2xl md:text-3xl font-bold text-secondary mb-2">车辆介绍</h3>
+            <p class="text-gray-600 max-w-md mx-auto md:mx-0">查看智联采丰车的核心参数、核心功能及使用须知</p>
+          </div>
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-secondary">
+            <i class="fa fa-car text-2xl"></i>
+          </div>
+        </a>
+      </div>
     </section>
 
   </main>
