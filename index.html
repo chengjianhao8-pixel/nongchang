@@ -109,12 +109,6 @@
       .city-name {
         @apply text-secondary font-semibold hover:underline cursor-pointer;
       }
-      .sensor-value {
-        @apply font-bold text-lg text-secondary;
-      }
-      .sensor-placeholder {
-        @apply font-bold text-lg text-gray-400;
-      }
     }
   </style>
 </head>
@@ -132,25 +126,6 @@
       <div class="modal-body">
         <div class="mb-4">
           <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
-            Version 1.3
-          </span>
-          <ul class="space-y-2">
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">优化定位功能，解决位置获取失败问题</span>
-            </li>
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">温湿度未获取时显示"--"占位符</span>
-            </li>
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">增加定位权限记忆功能，下次打开不重复弹窗</span>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-4">
-          <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
             Version 1.2
           </span>
           <ul class="space-y-2">
@@ -160,11 +135,11 @@
             </li>
             <li class="flex items-start">
               <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">基于实时温湿度数据动态计算风险指数</span>
+              <span class="text-gray-700">风险指数每小时在80-88之间动态变化</span>
             </li>
             <li class="flex items-start">
               <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">显示实时温湿度数值，动态更新风险等级</span>
+              <span class="text-gray-700">新增定位权限获取功能</span>
             </li>
           </ul>
         </div>
@@ -298,7 +273,7 @@
           允许获取位置
         </button>
         <button id="deny-location-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors">
-          不允许（本次会话）
+          不允许
         </button>
       </div>
     </div>
@@ -372,49 +347,21 @@
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-6 md:mb-0">
                 <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
-                <p class="text-gray-500 max-w-md">基于<span id="location-city" class="city-name">--</span>实时温湿度数据动态计算</p>
+                <p class="text-gray-500 max-w-md">基于<span id="location-city" class="city-name">获取位置中</span>气象数据综合计算得出的风险评估，助力科学防控</p>
             </div>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="text-center mb-6 md:mb-0 md:mr-10">
-                    <p class="text-gray-600 mb-1 flex items-center justify-center">
-                      <span id="location-city-display" class="city-name mr-1">--</span>
-                      <span>综合风险指数</span>
-                    </p>
-                    <p class="risk-index-number" id="main-risk-index">--</p>
-                    <p class="text-gray-600 mt-1">每5秒实时更新</p>
+                    <p class="risk-index-number" id="main-risk-index">86</p>
+                    <p class="text-gray-600 mt-1">综合风险指数（每小时更新）</p>
                 </div>
-                <div class="space-y-4">
-                    <!-- 温度风险：显示实时温度 + 动态风险等级 -->
-                    <div>
-                        <div class="flex items-center mb-1">
-                            <i class="fa fa-thermometer-half text-red-500 mr-2"></i>
-                            <span class="text-gray-700">实时温度：</span>
-                            <span class="sensor-placeholder" id="real-time-temperature">--</span>
-                            <span class="text-gray-700 ml-1">℃</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-gray-700">温度风险：</span>
-                            <span class="font-medium text-gray-400" id="temperature-risk-level">--</span>
-                            <span class="ml-2 px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-500" id="temperature-risk-badge">
-                              等待数据
-                            </span>
-                        </div>
+                <div>
+                    <div class="flex items-center mb-2">
+                        <i class="fa fa-thermometer-half text-green-500 mr-2"></i>
+                        <span class="text-gray-700">温度风险: <span class="font-medium">低</span></span>
                     </div>
-                    <!-- 湿度风险：显示实时湿度 + 动态风险等级 -->
-                    <div>
-                        <div class="flex items-center mb-1">
-                            <i class="fa fa-tint text-blue-500 mr-2"></i>
-                            <span class="text-gray-700">实时湿度：</span>
-                            <span class="sensor-placeholder" id="real-time-humidity">--</span>
-                            <span class="text-gray-700 ml-1">%</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-gray-700">湿度风险：</span>
-                            <span class="font-medium text-gray-400" id="humidity-risk-level">--</span>
-                            <span class="ml-2 px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-500" id="humidity-risk-badge">
-                              等待数据
-                            </span>
-                        </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-tint text-blue-500 mr-2"></i>
+                        <span class="text-gray-700">湿度风险: <span class="font-medium">中等</span></span>
                     </div>
                 </div>
             </div>
@@ -477,10 +424,7 @@
     const ipErrorMessage = document.getElementById('ip-error-message');
     const showUpdateLogBtn = document.getElementById('show-update-log');
     const locationCityEl = document.getElementById('location-city');
-    const locationCityDisplayEl = document.getElementById('location-city-display');
     const mainRiskIndexEl = document.getElementById('main-risk-index');
-    let currentCity = '未知城市';
-    let locationPermissionStatus = localStorage.getItem('locationPermission') || 'unset';
     
     // ===================== 新增：总采收量相关 =====================
     const allHarvestCountEl = document.getElementById('all-harvest-count');
@@ -500,32 +444,30 @@
       localStorage.setItem(TOTAL_HARVEST_STORAGE_KEY, totalAllHarvest);
     }
     
-    // ===================== 定位相关功能 =====================
+    // ===================== 新增：定位相关功能 =====================
     function showLocationModal() {
-      // 只有当权限状态为未设置时才显示弹窗
-      if (locationPermissionStatus === 'unset') {
+      // 只有第一次访问时显示定位弹窗
+      if (localStorage.getItem('locationPermission') !== 'allowed' && 
+          localStorage.getItem('locationPermission') !== 'denied') {
         showModal('location-modal');
+      } else if (localStorage.getItem('locationPermission') === 'allowed') {
+        // 如果已经授权，直接获取位置
+        requestLocation();
+      } else {
+        locationCityEl.textContent = '未授权定位';
       }
     }
     
     function getCityByCoordinates(latitude, longitude) {
       return new Promise((resolve) => {
-        // 添加超时处理，防止API请求失败
-        const timeout = setTimeout(() => {
-          resolve('定位失败');
-          document.body.removeChild(script);
-          if (window.baiduReverseGeoCodeCallback) {
-            delete window.baiduReverseGeoCodeCallback;
-          }
-        }, 8000); // 8秒超时
-        
+        // 使用百度地图API逆地理编码获取城市
         const script = document.createElement('script');
         script.src = `https://api.map.baidu.com/reverse_geocoding/v3/?ak=zG4G95QPGGQw5nQwR1QwPw8Wf0UcZfQs&output=json&coordtype=wgs84ll&location=${latitude},${longitude}&callback=baiduReverseGeoCodeCallback`;
         
         window.baiduReverseGeoCodeCallback = function(result) {
-          clearTimeout(timeout);
           if (result.status === 0 && result.result.addressComponent.city) {
             let city = result.result.addressComponent.city;
+            // 去除"市"字结尾
             if (city.endsWith('市')) {
               city = city.slice(0, -1);
             }
@@ -541,13 +483,10 @@
       });
     }
     
-    async function requestLocationPermission() {
+    async function requestLocation() {
       if (!navigator.geolocation) {
         alert('您的浏览器不支持地理位置功能，请升级浏览器');
         locationCityEl.textContent = '不支持定位';
-        locationCityDisplayEl.textContent = '不支持定位';
-        locationPermissionStatus = 'denied';
-        localStorage.setItem('locationPermission', 'denied');
         return;
       }
       
@@ -561,170 +500,49 @@
         });
         
         const { latitude, longitude } = position.coords;
-        currentCity = await getCityByCoordinates(latitude, longitude);
+        const city = await getCityByCoordinates(latitude, longitude);
         
-        // 如果定位成功，更新显示
-        if (currentCity !== '定位失败') {
-          locationCityEl.textContent = currentCity;
-          locationCityDisplayEl.textContent = currentCity;
-          localStorage.setItem('userCity', currentCity);
-        } else {
-          locationCityEl.textContent = '定位失败';
-          locationCityDisplayEl.textContent = '定位失败';
-        }
-        
-        locationPermissionStatus = 'allowed';
-        localStorage.setItem('locationPermission', 'allowed');
+        locationCityEl.textContent = city;
+        localStorage.setItem('userCity', city);
         
       } catch (error) {
         console.error('获取定位失败:', error);
         locationCityEl.textContent = '定位失败';
-        locationCityDisplayEl.textContent = '定位失败';
-        locationPermissionStatus = 'denied';
-        localStorage.setItem('locationPermission', 'denied');
       }
     }
     
-    // ===================== 新增：实时温湿度模拟与风险计算 =====================
-    const realTimeTempEl = document.getElementById('real-time-temperature');
-    const realTimeHumidityEl = document.getElementById('real-time-humidity');
-    const tempRiskLevelEl = document.getElementById('temperature-risk-level');
-    const humidityRiskLevelEl = document.getElementById('humidity-risk-level');
-    const tempRiskBadgeEl = document.getElementById('temperature-risk-badge');
-    const humidityRiskBadgeEl = document.getElementById('humidity-risk-badge');
-    
-    // 植物生长适宜范围（可根据实际作物调整）
-    const OPTIMAL_TEMP_RANGE = { min: 20, max: 28 }; // 适宜温度：20-28℃
-    const OPTIMAL_HUMIDITY_RANGE = { min: 50, max: 70 }; // 适宜湿度：50%-70%
-    
-    // 生成接近真实的实时温湿度数据（小范围波动，模拟传感器）
-    function generateRealTimeSensorData() {
-      // 初始数据，避免一开始就显示具体数值
-      const baseTemp = 25;
-      const baseHumidity = 62;
+    // ===================== 新增：风险指数每小时变化 =====================
+    function updateRiskIndex() {
+      // 生成80-88之间的随机整数
+      const min = 80;
+      const max = 88;
+      const newIndex = Math.floor(Math.random() * (max - min + 1)) + min;
       
-      // 温度波动范围：±0.5℃
-      const newTemp = (baseTemp + (Math.random() - 0.5) * 1).toFixed(1);
-      // 湿度波动范围：±1%
-      const newHumidity = (baseHumidity + (Math.random() - 0.5) * 2).toFixed(1);
-      
-      return {
-        temperature: parseFloat(newTemp),
-        humidity: parseFloat(newHumidity)
-      };
-    }
-    
-    // 根据数值判断风险等级（低/中等/高）
-    function getRiskLevel(value, optimalMin, optimalMax) {
-      if (value >= optimalMin && value <= optimalMax) {
-        return '低';
-      } else if (
-        (value >= optimalMin - 3 && value < optimalMin) || 
-        (value > optimalMax && value <= optimalMax + 3)
-      ) {
-        return '中等';
-      } else {
-        return '高';
-      }
-    }
-    
-    // 根据风险等级设置样式
-    function setRiskBadgeStyle(badgeEl, riskLevel) {
-      badgeEl.className = 'ml-2 px-2 py-0.5 rounded text-xs';
-      switch(riskLevel) {
-        case '低':
-          badgeEl.innerHTML = '<i class="fa fa-check text-green-500"></i> 适宜';
-          badgeEl.classList.add('bg-green-100', 'text-green-700');
-          break;
-        case '中等':
-          badgeEl.innerHTML = '<i class="fa fa-exclamation text-yellow-500"></i> 需关注';
-          badgeEl.classList.add('bg-yellow-100', 'text-yellow-700');
-          break;
-        case '高':
-          badgeEl.innerHTML = '<i class="fa fa-times text-red-500"></i> 需处理';
-          badgeEl.classList.add('bg-red-100', 'text-red-700');
-          break;
-      }
-    }
-    
-    // 基于实时温湿度计算综合风险指数（0-100，数值越高风险越大）
-    function calculateRiskIndex(temperature, humidity) {
-      // 计算温度偏离度（0-100）：越接近适宜范围，分数越低
-      let tempDeviation;
-      if (temperature < OPTIMAL_TEMP_RANGE.min) {
-        tempDeviation = ((OPTIMAL_TEMP_RANGE.min - temperature) / 10) * 100;
-      } else if (temperature > OPTIMAL_TEMP_RANGE.max) {
-        tempDeviation = ((temperature - OPTIMAL_TEMP_RANGE.max) / 10) * 100;
-      } else {
-        tempDeviation = 0;
-      }
-      
-      // 计算湿度偏离度（0-100）
-      let humidityDeviation;
-      if (humidity < OPTIMAL_HUMIDITY_RANGE.min) {
-        humidityDeviation = ((OPTIMAL_HUMIDITY_RANGE.min - humidity) / 30) * 100;
-      } else if (humidity > OPTIMAL_HUMIDITY_RANGE.max) {
-        humidityDeviation = ((humidity - OPTIMAL_HUMIDITY_RANGE.max) / 30) * 100;
-      } else {
-        humidityDeviation = 0;
-      }
-      
-      // 综合风险指数 = （温度偏离度×0.5 + 湿度偏离度×0.5），转换为0-100的风险值
-      const riskScore = Math.round((tempDeviation * 0.5 + humidityDeviation * 0.5));
-      // 反转逻辑：风险指数越低越安全（符合原设计）
-      return 100 - riskScore;
-    }
-    
-    // 实时更新温湿度、风险等级和风险指数
-    function updateRealTimeData() {
-      const { temperature, humidity } = generateRealTimeSensorData();
-      
-      // 更新实时温湿度显示（移除占位符样式，添加实际数值样式）
-      realTimeTempEl.textContent = temperature;
-      realTimeHumidityEl.textContent = humidity;
-      realTimeTempEl.classList.remove('sensor-placeholder');
-      realTimeTempEl.classList.add('sensor-value');
-      realTimeHumidityEl.classList.remove('sensor-placeholder');
-      realTimeHumidityEl.classList.add('sensor-value');
-      
-      // 计算温度风险等级并更新
-      const tempRiskLevel = getRiskLevel(temperature, OPTIMAL_TEMP_RANGE.min, OPTIMAL_TEMP_RANGE.max);
-      tempRiskLevelEl.textContent = tempRiskLevel;
-      tempRiskLevelEl.classList.remove('text-gray-400');
-      setRiskBadgeStyle(tempRiskBadgeEl, tempRiskLevel);
-      
-      // 计算湿度风险等级并更新
-      const humidityRiskLevel = getRiskLevel(humidity, OPTIMAL_HUMIDITY_RANGE.min, OPTIMAL_HUMIDITY_RANGE.max);
-      humidityRiskLevelEl.textContent = humidityRiskLevel;
-      humidityRiskLevelEl.classList.remove('text-gray-400');
-      setRiskBadgeStyle(humidityRiskBadgeEl, humidityRiskLevel);
-      
-      // 计算并更新综合风险指数
-      const riskIndex = calculateRiskIndex(temperature, humidity);
-      mainRiskIndexEl.textContent = riskIndex;
-      
-      // 根据风险指数调整颜色
-      mainRiskIndexEl.classList.remove('text-green-500', 'text-yellow-500', 'text-orange-500', 'text-red-500');
-      if (riskIndex >= 85) {
-        mainRiskIndexEl.classList.add('text-green-500');
-      } else if (riskIndex >= 70) {
-        mainRiskIndexEl.classList.add('text-yellow-500');
-      } else if (riskIndex >= 50) {
-        mainRiskIndexEl.classList.add('text-orange-500');
-      } else {
-        mainRiskIndexEl.classList.add('text-red-500');
-      }
-      
-      // 添加脉冲动画
+      // 更新显示并添加动画效果
+      mainRiskIndexEl.textContent = newIndex;
       mainRiskIndexEl.classList.add('number-pulse');
-      realTimeTempEl.classList.add('number-pulse');
-      realTimeHumidityEl.classList.add('number-pulse');
       
       setTimeout(() => {
         mainRiskIndexEl.classList.remove('number-pulse');
-        realTimeTempEl.classList.remove('number-pulse');
-        realTimeHumidityEl.classList.remove('number-pulse');
       }, 500);
+    }
+    
+    // 设置每小时更新一次风险指数
+    function setRiskIndexUpdateTimer() {
+      // 立即更新一次
+      updateRiskIndex();
+      
+      // 计算当前时间到下一个整点的时间差
+      const now = new Date();
+      const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0);
+      let timeToNextHour = nextHour.getTime() - now.getTime();
+      
+      // 设置定时器，每小时更新一次
+      setTimeout(() => {
+        updateRiskIndex();
+        // 之后每小时执行一次
+        setInterval(updateRiskIndex, 3600000); // 3600000毫秒 = 1小时
+      }, timeToNextHour);
     }
 
     function showModal(modalId) {
@@ -773,23 +591,23 @@
     }
 
     const updateModal = document.getElementById('update-modal');
-    // 版本更新，强制显示一次更新日志
-    if (localStorage.getItem('updateModalClosed_v1.3') !== 'true') {
+    // 版本更新，显示新的更新日志
+    if (localStorage.getItem('updateModalClosed_v1.2') !== 'true') {
       showModal('update-modal');
     }
 
     document.getElementById('close-modal').addEventListener('click', () => {
       hideModal('update-modal');
-      localStorage.setItem('updateModalClosed_v1.3', 'true');
+      localStorage.setItem('updateModalClosed_v1.2', 'true');
     });
     document.getElementById('confirm-modal').addEventListener('click', () => {
       hideModal('update-modal');
-      localStorage.setItem('updateModalClosed_v1.3', 'true');
+      localStorage.setItem('updateModalClosed_v1.2', 'true');
     });
     updateModal.addEventListener('click', (e) => {
       if (e.target === updateModal) {
         hideModal('update-modal');
-        localStorage.setItem('updateModalClosed_v1.3', 'true');
+        localStorage.setItem('updateModalClosed_v1.2', 'true');
       }
     });
 
@@ -985,7 +803,7 @@
     // 监听任意方向键（上、下、左、右）增加采收量
     document.addEventListener('keydown', function(e) {
       const directionKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-      const keyCodes = [38, 40, 37, 39];
+      const keyCodes = [38, 40, 37, 39]; // 对应方向键的keyCode
       
       if (directionKeys.includes(e.key) || keyCodes.includes(e.keyCode)) {
         increaseHarvestCount();
@@ -1025,59 +843,40 @@
     });
     
     // 定位相关事件绑定
-    document.getElementById('allow-location-btn').addEventListener('click', async () => {
+    document.getElementById('allow-location-btn').addEventListener('click', () => {
       hideModal('location-modal');
-      locationPermissionStatus = 'allowed';
       localStorage.setItem('locationPermission', 'allowed');
-      await requestLocationPermission();
+      requestLocation();
     });
     
     document.getElementById('deny-location-btn').addEventListener('click', () => {
       hideModal('location-modal');
       locationCityEl.textContent = '未授权定位';
-      locationCityDisplayEl.textContent = '未授权定位';
-      locationPermissionStatus = 'denied';
       localStorage.setItem('locationPermission', 'denied');
     });
     
     document.getElementById('close-location-modal').addEventListener('click', () => {
       hideModal('location-modal');
       locationCityEl.textContent = '未授权定位';
-      locationCityDisplayEl.textContent = '未授权定位';
-      locationPermissionStatus = 'denied';
       localStorage.setItem('locationPermission', 'denied');
     });
     
     // 页面加载完成后初始化
     window.addEventListener('load', () => {
-      // 检查缓存城市信息
+      // 检查缓存的城市信息
       const savedCity = localStorage.getItem('userCity');
-      if (savedCity && savedCity !== '定位失败') {
-        currentCity = savedCity;
-        locationCityEl.textContent = currentCity;
-        locationCityDisplayEl.textContent = currentCity;
+      if (savedCity) {
+        locationCityEl.textContent = savedCity;
       }
       
-      // 根据权限状态设置显示
-      if (locationPermissionStatus === 'denied') {
-        locationCityEl.textContent = '未授权定位';
-        locationCityDisplayEl.textContent = '未授权定位';
-      } else if (locationPermissionStatus === 'allowed' && !savedCity) {
-        // 如果已授权但没有城市缓存，尝试重新获取
-        requestLocationPermission();
-      }
-      
-      // 显示定位弹窗（只有第一次会显示）
+      // 显示定位弹窗
       showLocationModal();
       
       // 初始化总采收量显示
       updateTotalAllHarvestDisplay();
       
-      // 初始化实时数据并设置5秒更新一次
-      setTimeout(() => {
-        updateRealTimeData();
-        setInterval(updateRealTimeData, 5000);
-      }, 1000);
+      // 启动风险指数定时更新
+      setRiskIndexUpdateTimer();
     });
   </script>
 </body>
