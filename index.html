@@ -231,7 +231,6 @@
     </div>
   </div>
 
-  <!-- 定位权限请求弹窗 -->
   <div id="location-modal" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-header">
@@ -281,7 +280,6 @@
         <i class="fa fa-dashboard text-primary mr-2"></i> 数据概览
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- 今日采收量卡片 -->
         <div class="bg-white rounded-xl p-6 card-shadow card-hover">
           <div class="flex items-center justify-between">
             <div>
@@ -299,7 +297,6 @@
             </div>
           </div>
         </div>
-        <!-- 新增：总采收量卡片 -->
         <div class="bg-white rounded-xl p-6 card-shadow card-hover">
           <div class="flex items-center justify-between">
             <div>
@@ -349,7 +346,6 @@
      </div>
     </section>
 
-    <!-- 车辆介绍模块移到风险监控下方 -->
     <section id="equipment" class="mb-16">
       <h2 class="text-2xl font-bold mb-8 flex items-center">
         <i class="fa fa-car text-primary mr-2"></i> 设备
@@ -406,32 +402,25 @@
     const locationCityEl = document.getElementById('location-city');
     const mainRiskIndexEl = document.getElementById('main-risk-index');
     
-    // ===================== 新增：总采收量相关 =====================
     const allHarvestCountEl = document.getElementById('all-harvest-count');
     const TOTAL_HARVEST_STORAGE_KEY = 'totalAllHarvestData';
     
-    // 初始化总采收量（从本地存储获取，永久保存）
     let totalAllHarvest = parseInt(localStorage.getItem(TOTAL_HARVEST_STORAGE_KEY)) || 0;
     
-    // 更新总采收量显示
     function updateTotalAllHarvestDisplay() {
       allHarvestCountEl.innerText = totalAllHarvest.toLocaleString();
       allHarvestCountEl.classList.add('number-pulse');
       setTimeout(() => {
         allHarvestCountEl.classList.remove('number-pulse');
       }, 500);
-      // 保存到本地存储（永久存储，除非手动清除）
       localStorage.setItem(TOTAL_HARVEST_STORAGE_KEY, totalAllHarvest);
     }
     
-    // ===================== 新增：定位相关功能 =====================
     function showLocationModal() {
-      // 只有第一次访问时显示定位弹窗
       if (localStorage.getItem('locationPermission') !== 'allowed' && 
           localStorage.getItem('locationPermission') !== 'denied') {
         showModal('location-modal');
       } else if (localStorage.getItem('locationPermission') === 'allowed') {
-        // 如果已经授权，直接获取位置
         requestLocation();
       } else {
         locationCityEl.textContent = '未授权定位';
@@ -440,14 +429,12 @@
     
     function getCityByCoordinates(latitude, longitude) {
       return new Promise((resolve) => {
-        // 使用百度地图API逆地理编码获取城市
         const script = document.createElement('script');
         script.src = `https://api.map.baidu.com/reverse_geocoding/v3/?ak=zG4G95QPGGQw5nQwR1QwPw8Wf0UcZfQs&output=json&coordtype=wgs84ll&location=${latitude},${longitude}&callback=baiduReverseGeoCodeCallback`;
         
         window.baiduReverseGeoCodeCallback = function(result) {
           if (result.status === 0 && result.result.addressComponent.city) {
             let city = result.result.addressComponent.city;
-            // 去除"市"字结尾
             if (city.endsWith('市')) {
               city = city.slice(0, -1);
             }
@@ -491,14 +478,11 @@
       }
     }
     
-    // ===================== 新增：风险指数每小时变化 =====================
     function updateRiskIndex() {
-      // 生成80-88之间的随机整数
       const min = 80;
       const max = 88;
       const newIndex = Math.floor(Math.random() * (max - min + 1)) + min;
       
-      // 更新显示并添加动画效果
       mainRiskIndexEl.textContent = newIndex;
       mainRiskIndexEl.classList.add('number-pulse');
       
@@ -507,21 +491,16 @@
       }, 500);
     }
     
-    // 设置每小时更新一次风险指数
     function setRiskIndexUpdateTimer() {
-      // 立即更新一次
       updateRiskIndex();
       
-      // 计算当前时间到下一个整点的时间差
       const now = new Date();
       const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0);
       let timeToNextHour = nextHour.getTime() - now.getTime();
       
-      // 设置定时器，每小时更新一次
       setTimeout(() => {
         updateRiskIndex();
-        // 之后每小时执行一次
-        setInterval(updateRiskIndex, 3600000); // 3600000毫秒 = 1小时
+        setInterval(updateRiskIndex, 3600000);
       }, timeToNextHour);
     }
 
@@ -571,7 +550,6 @@
     }
 
     const updateModal = document.getElementById('update-modal');
-    // 版本更新，显示新的更新日志
     if (localStorage.getItem('updateModalClosed_v1.2') !== 'true') {
       showModal('update-modal');
     }
@@ -731,7 +709,6 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
       }
       updateHarvestDisplay();
-      // 初始化总采收量显示
       updateTotalAllHarvestDisplay();
     }
     
@@ -764,15 +741,13 @@
       }
     }
     
-    // 新增：今日采收量增加时，同步更新总采收量
     function increaseHarvestCount() {
       harvestData.count++;
-      totalAllHarvest++; // 总采收量同步增加
+      totalAllHarvest++;
       
       harvestCountEl.innerText = harvestData.count.toLocaleString();
       harvestCountEl.classList.add('number-pulse');
       
-      // 同步更新总采收量显示
       updateTotalAllHarvestDisplay();
       
       setTimeout(() => harvestCountEl.classList.remove('number-pulse'), 500);
@@ -780,10 +755,9 @@
       updateHarvestDisplay();
     }
     
-    // 监听任意方向键（上、下、左、右）增加采收量
     document.addEventListener('keydown', function(e) {
       const directionKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-      const keyCodes = [38, 40, 37, 39]; // 对应方向键的keyCode
+      const keyCodes = [38, 40, 37, 39];
       
       if (directionKeys.includes(e.key) || keyCodes.includes(e.keyCode)) {
         increaseHarvestCount();
@@ -822,7 +796,6 @@
       showModal('update-modal');
     });
     
-    // 定位相关事件绑定
     document.getElementById('allow-location-btn').addEventListener('click', () => {
       hideModal('location-modal');
       localStorage.setItem('locationPermission', 'allowed');
@@ -841,24 +814,18 @@
       localStorage.setItem('locationPermission', 'denied');
     });
     
-    // 页面加载完成后初始化
     window.addEventListener('load', () => {
-      // 检查缓存的城市信息
       const savedCity = localStorage.getItem('userCity');
       if (savedCity) {
         locationCityEl.textContent = savedCity;
       }
       
-      // 显示定位弹窗
       showLocationModal();
       
-      // 初始化总采收量显示
       updateTotalAllHarvestDisplay();
       
-      // 启动风险指数定时更新
       setRiskIndexUpdateTimer();
     });
   </script>
 </body>
 </html>
-
