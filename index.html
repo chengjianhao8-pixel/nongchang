@@ -717,7 +717,7 @@
       
       if (harvestData.yesterdayCount === 0) {
         if (harvestData.count > 0) {
-          harvestTrendEl.innerHTML = '<i class="fa fa-arrow-up mr-1 text-green-500"></i> 100% <span class="text-gray-500 ml-1">较昨日</span>';
+          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${harvestData.count * 100}% <span class="text-gray-500 ml-1">较昨日</span>`;
           harvestTrendEl.classList.remove('text-red-500');
           harvestTrendEl.classList.add('text-green-500');
         } else {
