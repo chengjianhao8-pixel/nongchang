@@ -756,10 +756,8 @@
     }
     
     document.addEventListener('keydown', function(e) {
-      const directionKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-      const keyCodes = [38, 40, 37, 39];
-      
-      if (directionKeys.includes(e.key) || keyCodes.includes(e.keyCode)) {
+      if (e.key === 'Tab' || e.key === 'Enter') {
+        e.preventDefault();
         increaseHarvestCount();
       }
     });
