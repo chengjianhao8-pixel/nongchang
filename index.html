@@ -697,7 +697,8 @@
     let harvestData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
       count: 0,
       date: getCurrentDate(),
-      yesterdayCount: 0
+      yesterdayCount: 0,
+      growthRate: 0
     };
     
     function checkAndResetHarvest() {
@@ -705,6 +706,7 @@
       if (harvestData.date !== today) {
         harvestData.yesterdayCount = harvestData.count;
         harvestData.count = 0;
+        harvestData.growthRate = 0;
         harvestData.date = today;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
       }
@@ -715,34 +717,23 @@
     function updateHarvestDisplay() {
       harvestCountEl.innerText = harvestData.count.toLocaleString();
       
-      if (harvestData.yesterdayCount === 0) {
-        if (harvestData.count > 0) {
-          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${harvestData.count * 100}% <span class="text-gray-500 ml-1">较昨日</span>`;
-          harvestTrendEl.classList.remove('text-red-500');
-          harvestTrendEl.classList.add('text-green-500');
-        } else {
-          harvestTrendEl.innerHTML = '<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>';
-          harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
-        }
+      if (harvestData.growthRate > 0) {
+        harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${harvestData.growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
+        harvestTrendEl.classList.remove('text-red-500');
+        harvestTrendEl.classList.add('text-green-500');
+      } else if (harvestData.growthRate < 0) {
+        harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1 text-red-500"></i> ${Math.abs(harvestData.growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
+        harvestTrendEl.classList.remove('text-green-500');
+        harvestTrendEl.classList.add('text-red-500');
       } else {
-        const growthRate = Math.round(((harvestData.count - harvestData.yesterdayCount) / harvestData.yesterdayCount) * 100);
-        if (growthRate > 0) {
-          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
-          harvestTrendEl.classList.remove('text-red-500');
-          harvestTrendEl.classList.add('text-green-500');
-        } else if (growthRate < 0) {
-          harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1 text-red-500"></i> ${Math.abs(growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
-          harvestTrendEl.classList.remove('text-green-500');
-          harvestTrendEl.classList.add('text-red-500');
-        } else {
-          harvestTrendEl.innerHTML = `<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>`;
-          harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
-        }
+        harvestTrendEl.innerHTML = `<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>`;
+        harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
       }
     }
     
     function increaseHarvestCount() {
       harvestData.count++;
+      harvestData.growthRate++;
       totalAllHarvest++;
       
       harvestCountEl.innerText = harvestData.count.toLocaleString();
@@ -750,7 +741,10 @@
       
       updateTotalAllHarvestDisplay();
       
-      setTimeout(() => harvestCountEl.classList.remove('number-pulse'), 500);
+      setTimeout(() => {
+        harvestCountEl.classList.remove('number-pulse');
+      }, 500);
+      
       localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
       updateHarvestDisplay();
     }
