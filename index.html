@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>智慧农场管理系统</title>
+  <title>智慧农场 - 车辆介绍</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
   
   <script>
     tailwind.config = {
@@ -18,8 +17,7 @@
             accent: '#f97316',
             neutral: '#f3f4f6',
             'neutral-dark': '#1f2937',
-            danger: '#ef4444',
-            'danger-light': '#fef2f2'
+            ai: '#8b5cf6'
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -44,325 +42,259 @@
         transform: translateY(-5px);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       }
-      .stat-number {
-        @apply text-3xl md:text-4xl font-bold text-primary;
+      .vehicle-img-container {
+        @apply bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative;
       }
-      .risk-index-number {
-        @apply text-5xl md:text-6xl font-bold text-green-500;
+      .img-aspect-container {
+        @apply w-full relative;
+        padding-bottom: 75%;
       }
-      .clickable-icon {
-        @apply cursor-pointer hover:bg-green-200 transition-all duration-300;
+      .img-aspect-content {
+        @apply absolute top-0 left-0 w-full h-full object-cover;
       }
-      .number-pulse {
-        animation: pulse 0.5s ease;
+      .vehicle-param {
+        @apply flex justify-between items-center py-3 border-b border-gray-100;
       }
-      @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
+      .feature-item {
+        @apply flex items-start mb-4;
       }
-      .modal-overlay {
-        @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300 opacity-0 pointer-events-none;
+      .feature-icon {
+        @apply flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1;
       }
-      .modal-container {
-        @apply bg-white rounded-xl p-6 md:p-8 max-w-md w-full mx-4 card-shadow transform transition-transform duration-300 scale-95;
+      .slide-btn {
+        @apply absolute w-10 h-10 rounded-full bg-white/80 text-secondary hover:bg-secondary hover:text-white transition-all duration-300 flex items-center justify-center shadow-md z-10;
       }
-      .modal-header {
-        @apply flex justify-between items-center mb-4 pb-2 border-b border-gray-100;
+      .slide-indicator {
+        @apply absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10;
       }
-      .modal-overlay.active {
-        @apply opacity-100 pointer-events-auto;
+      .indicator-dot {
+        @apply w-2 h-2 rounded-full bg-white/60 hover:bg-white transition-all duration-300;
       }
-      .modal-overlay.active .modal-container {
-        @apply scale-100;
+      .indicator-dot.active {
+        @apply bg-secondary w-4;
       }
-      .connect-btn {
-        @apply flex items-center font-medium py-2 px-6 rounded-lg transition-all duration-300 shadow-md;
+      .manual-link {
+        @apply mt-6 flex items-center justify-center py-3 bg-secondary/5 border border-secondary/20 text-secondary rounded-lg text-base font-medium hover:bg-secondary/10 transition-colors;
       }
-      .connect-btn.default {
-        @apply bg-secondary hover:bg-secondary/90 text-white;
+      .ai-chat-container {
+        @apply fixed bottom-6 right-6 z-50 w-80 md:w-96 flex flex-col bg-white rounded-xl shadow-xl overflow-hidden;
       }
-      .connect-btn.connected {
-        @apply bg-primary text-white;
+      .ai-chat-header {
+        @apply bg-ai text-white py-3 px-4 flex justify-between items-center;
       }
-      .connect-btn.connected:hover {
-        @apply bg-danger text-white shadow-lg;
+      .ai-chat-messages {
+        @apply flex-1 overflow-y-auto max-h-[60vh] p-4 bg-gray-50 space-y-4;
       }
-      .connect-btn.connected:hover .btn-text {
-        @apply text-white font-semibold;
+      .ai-message {
+        @apply bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[85%] border border-gray-100;
       }
-      .connect-btn.connected:hover .connect-icon {
-        @apply text-white;
+      .user-message {
+        @apply bg-ai/10 text-neutral-dark rounded-lg rounded-tr-none p-3 shadow-sm max-w-[85%] ml-auto;
       }
-      .connect-btn.connected:hover .ip-display {
-        @apply text-white/90;
+      .ai-chat-input {
+        @apply flex items-center border-t border-gray-100 p-3;
       }
-      .ip-display {
-        @apply text-sm font-normal ml-2 md:ml-3 opacity-90;
+      .ai-input-field {
+        @apply flex-1 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ai/50 focus:border-ai mr-2;
       }
-      .connect-icon {
-        @apply transition-all duration-300;
+      .ai-send-btn {
+        @apply bg-ai text-white rounded-lg px-4 py-2 hover:bg-ai/90 transition-colors;
       }
-      .ip-input-error {
-        @apply border-danger focus:ring-danger/50 focus:border-danger bg-danger-light;
+      .ai-toggle-btn {
+        @apply fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-ai text-white shadow-lg flex items-center justify-center hover:bg-ai/90 transition-all duration-300;
       }
-      .city-name {
-        @apply text-secondary font-semibold hover:underline cursor-pointer;
+      .typing-indicator {
+        @apply flex items-center space-x-1.5 py-2 pl-3;
+      }
+      .typing-dot {
+        @apply w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
       }
     }
   </style>
 </head>
 <body class="bg-gray-50 font-sans text-neutral-dark">
-  <div id="update-modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
-          <i class="fa fa-info-circle text-secondary mr-2"></i> 更新日志
-        </h3>
-        <button id="close-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <i class="fa fa-times text-xl"></i>
-        </button>
-      </div>
-        <div class="mb-4">
-          <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
-            Version 1.1
-          </span>
-          <ul class="space-y-2">
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">新增WIFI连接设备功能</span>
-            </li>
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">提升网站稳定性</span>
-            </li>
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">优化网站流畅度</span>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-4">
-          <span class="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-medium mb-3">
-            Beta 1.0
-          </span>
-          <ul class="space-y-2">
-            <li class="flex items-start">
-              <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
-              <span class="text-gray-700">搭建基础框架，包含数据概览、风险监控、车辆介绍模块</span>
-            </li>
-          </ul>
-        </div>
-        <button id="confirm-modal" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-          我知道了
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="connect-modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
-          <i class="fa fa-wifi text-secondary mr-2"></i> 设备连接
-        </h3>
-        <button id="close-connect-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <i class="fa fa-times text-xl"></i>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="mb-6">
-          <i class="fa fa-wifi text-5xl text-secondary mb-4"></i>
-          <p class="text-lg text-gray-800 font-medium mb-3">请确保电脑与主板已连接同一无线网络</p>
-          <p class="text-gray-600 mb-3">IP地址可在主板连接的无线网络列表中查看</p>
-          <p class="text-gray-600">你可打开主板"设置"模块，点击"WLAN"查看已连接网络</p>
-        </div>
-        <button id="confirm-connect-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-          连接
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="ip-modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
-          <i class="fa fa-server text-secondary mr-2"></i> 输入IP地址
-        </h3>
-        <button id="close-ip-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <i class="fa fa-times text-xl"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-6">
-          <label for="ip-address" class="block text-gray-700 mb-2 text-left">设备IP地址</label>
-          <input type="text" id="ip-address" placeholder="例如：192.168.1.1" 
-                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
-          <p id="ip-error-message" class="text-danger text-sm mt-1 hidden">请输入正确的IP格式</p>
-        </div>
-        <button id="submit-ip-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-          确认连接
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="success-modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
-          <i class="fa fa-check-circle text-primary mr-2"></i> 连接成功
-        </h3>
-        <button id="close-success-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <i class="fa fa-times text-xl"></i>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="mb-6">
-          <i class="fa fa-check-circle text-5xl text-primary mb-4"></i>
-          <p class="text-xl text-gray-800 font-medium">设备已成功连接</p>
-          <p class="text-gray-500 mt-2" id="connected-ip">IP地址：</p>
-        </div>
-        <button id="confirm-success-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-          完成
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="location-modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3 class="text-xl font-bold text-neutral-dark flex items-center">
-          <i class="fa fa-map-marker text-secondary mr-2"></i> 位置权限请求
-        </h3>
-        <button id="close-location-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <i class="fa fa-times text-xl"></i>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="mb-6">
-          <i class="fa fa-map-marker text-5xl text-secondary mb-4"></i>
-          <p class="text-lg text-gray-800 font-medium mb-3">为提供精准的本地种植风险评估</p>
-          <p class="text-gray-600 mb-3">需要获取你的位置信息</p>
-          <p class="text-gray-600">我们不会收集或存储你的详细位置信息</p>
-        </div>
-        <button id="allow-location-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors mb-3">
-          允许获取位置
-        </button>
-        <button id="deny-location-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors">
-          不允许
-        </button>
-      </div>
-    </div>
-  </div>
-
   <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-    <section class="mb-12 text-center">
-      <div class="flex justify-end mb-6">
-        <button id="connect-device-btn" class="connect-btn default">
-          <i class="fa fa-wifi connect-icon mr-2"></i>
-          <span class="btn-text">连接设备</span>
-          <span class="ip-display hidden"></span>
-        </button>
+    <section class="mb-12">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+        <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-neutral-dark">
+          智联<span class="text-secondary">采丰车</span>
+        </h1>
+        <a href="index.html" class="flex items-center text-secondary hover:text-primary transition-colors bg-white px-4 py-2 rounded-lg card-shadow">
+          <i class="fa fa-arrow-left mr-2"></i>
+          <span>进入管理系统</span>
+        </a>
       </div>
-      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-neutral-dark mb-4">
-        智慧农场 <span class="text-primary">管理平台</span>
-      </h1>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        实时监控生长数据，精准统计采收量，科学防控种植风险
+      <p class="text-lg text-gray-600 max-w-3xl">
+        智慧农场核心作业设备，集自动化、精准化、智能化于一体，大幅提升播种效率、出苗质量与收获效果
       </p>
     </section>
 
-    <section id="dashboard" class="mb-16">
-      <h2 class="text-2xl font-bold mb-8 flex items-center">
-        <i class="fa fa-dashboard text-primary mr-2"></i> 数据概览
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl p-6 card-shadow card-hover">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-gray-500 mb-1">今日采收量</p>
-              <p class="stat-number" id="total-harvest">
-                <span id="harvest-count">0</span> <span class="text-lg font-normal">颗</span>
-              </p>
-              <p class="text-sm flex items-center mt-2" id="harvest-trend">
-                <i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>
-              </p>
+    <section class="mb-16">
+      <div class="bg-white rounded-xl overflow-hidden card-shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div class="vehicle-img-container p-4 lg:p-8">
+            <div class="img-aspect-container">
+              <img id="vehicle-img" src="img/che1.png" alt="智能采丰车" class="img-aspect-content transition-opacity duration-500">
+              <div id="img-fallback" class="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-500 hidden">
+                <i class="fa fa-truck text-4xl mr-3"></i>
+                <span>图片加载失败</span>
+              </div>
             </div>
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-primary" 
-                 id="harvest-icon">
-              <i class="fa fa-scissors text-xl"></i>
+            
+            <button id="prev-btn" class="slide-btn left-4 lg:left-8" aria-label="上一张图片">
+              <i class="fa fa-angle-left text-xl"></i>
+            </button>
+            
+            <button id="next-btn" class="slide-btn right-4 lg:right-8" aria-label="下一张图片">
+              <i class="fa fa-angle-right text-xl"></i>
+            </button>
+            
+            <div class="slide-indicator">
+              <span class="indicator-dot active" data-index="0"></span>
+              <span class="indicator-dot" data-index="1"></span>
+              <span class="indicator-dot" data-index="2"></span>
+              <span class="indicator-dot" data-index="3"></span>
+              <span class="indicator-dot" data-index="4"></span>
             </div>
           </div>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-shadow card-hover">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-gray-500 mb-1">总采收量</p>
-              <p class="stat-number" id="total-all-harvest">
-                <span id="all-harvest-count">0</span> <span class="text-lg font-normal">颗</span>
-              </p>
-              <p class="text-sm flex items-center mt-2 text-gray-500">
-                <i class="fa fa-calendar-check-o mr-1"></i> 历史累计数据
-              </p>
-            </div>
-            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-secondary">
-              <i class="fa fa-bar-chart text-xl"></i>
+          
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-neutral-dark mb-6">核心参数</h2>
+            <div class="space-y-1">
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">作业效率</span>
+                <span class="font-medium text-neutral-dark">15亩/小时（较传统设备提升300%）</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">动力类型</span>
+                <span class="font-medium text-neutral-dark">纯电动</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">控制方式</span>
+                <span class="font-medium text-neutral-dark">自动巡航 + 手动备份</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">收获精度</span>
+                <span class="font-medium text-neutral-dark">收获效率达人工的1.5倍，损伤率低于5%</span>
+              </div>
+              <div class="vehicle-param">
+                <span class="text-gray-500 w-1/3">适用作物</span>
+                <span class="font-medium text-neutral-dark">蔬菜、谷物、油料等多种作物</span>
+              </div>
+              
+              <a href="user/SKCON9_User_Guide.pdf" target="_blank" class="manual-link">
+                <i class="fa fa-file-pdf-o mr-2"></i>
+                <span>用户手册 SKCON9</span>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
-    
-    <section id="risk" class="mb-16">
-      <h2 class="text-2xl font-bold mb-8 flex items-center">
-        <i class="fa fa-exclamation-triangle text-primary mr-2"></i> 风险监控
-      </h2>
+
+    <section class="mb-16">
       <div class="bg-white rounded-xl p-8 card-shadow">
-        <div class="flex flex-col md:flex-row items-center justify-between">
-            <div class="text-center md:text-left mb-6 md:mb-0">
-                <h3 class="text-xl font-semibold mb-2">种植风险评估</h3>
-                <p class="text-gray-500 max-w-md">基于气象数据综合计算得出的风险评估，助力科学防控</p>
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+          <i class="fa fa-star text-accent mr-2"></i> 核心功能
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-wifi"></i>
             </div>
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="text-center mb-6 md:mb-0 md:mr-10">
-                    <p class="risk-index-number" id="main-risk-index">86</p>
-                    <p class="text-gray-600 mt-1">综合指数</p>
-                </div>
-                <div>
-                    <div class="flex items-center mb-2">
-                        <i class="fa fa-thermometer-half text-green-500 mr-2"></i>
-                        <span class="text-gray-700">温度风险: <span class="font-medium">中等</span></span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fa fa-tint text-blue-500 mr-2"></i>
-                        <span class="text-gray-700">湿度风险: <span class="font-medium">低</span></span>
-                    </div>
-                </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">首次实现SKCON9主板通讯</h3>
+              <p class="text-gray-600">根据现有网络数据，首次实现SKCON9主板双向通讯，接入Mesh2.0/内联网，实现稳定网络传输，实时上传数据至智慧农场管理系统。</p>
             </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-crosshairs"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">智能控制</h3>
+              <p class="text-gray-600">支持通过快速编程界面设定作业参数、规划作业路径，实时查看采收量，无需现场值守，显著节省人工成本。</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-shield"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">安全防护</h3>
+              <p class="text-gray-600">搭载新能源汽车同款视觉辅助驾驶技术，通过摄像头精准检测前方障碍（人员、动物、其他机械设备等），实现自动启停，有效规避运行中的各类突发情况。</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon mr-4">
+              <i class="fa fa-bar-chart"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">快捷管理</h3>
+              <p class="text-gray-600">配备独立管理系统，采用局域网连接主板核心技术，实现采集数据无缝同步，网络状况良好时延迟低至16ms。</p>
+            </div>
+          </div>
         </div>
-     </div>
-    </section>
-
-    <section id="equipment" class="mb-16">
-      <h2 class="text-2xl font-bold mb-8 flex items-center">
-        <i class="fa fa-car text-primary mr-2"></i> 设备
-      </h2>
-      <div class="bg-white rounded-xl p-8 card-shadow card-hover">
-        <a href="js.html" target="_blank" class="flex flex-col md:flex-row items-center justify-between w-full">
-          <div class="text-center md:text-left mb-6 md:mb-0">
-            <h3 class="text-2xl md:text-3xl font-bold text-secondary mb-2">车辆介绍</h3>
-            <p class="text-gray-600 max-w-md mx-auto md:mx-0">查看智联采丰车的核心参数、核心功能及使用须知</p>
-          </div>
-          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-secondary">
-            <i class="fa fa-car text-2xl"></i>
-          </div>
-        </a>
       </div>
     </section>
 
+    <section class="mb-8">
+      <div class="bg-white rounded-xl p-8 card-shadow">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <i class="fa fa-info-circle text-secondary mr-2"></i> 使用须知
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">使用前检查</h3>
+              <p class="text-gray-600">作业前需检查设备电量、播种/收获组件状态及网络连接情况，确保各项指标符合作业要求。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">维护保养</h3>
+              <p class="text-gray-600">每日作业后清洁播种器、收获组件及传感器，每周检查电池状态和轮胎，每月进行一次全面设备检测与维护。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">安全规范</h3>
+              <p class="text-gray-600">设备作业时，禁止人员进入作业区域；雨天、大风等恶劣天气请勿使用，避免设备故障或安全隐患。</p>
+            </div>
+          </div>
+          
+          <div class="flex">
+            <div class="flex-shrink-0 mt-1">
+              <i class="fa fa-check-circle text-primary text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold mb-1">网络要求</h3>
+              <p class="text-gray-600">需确保设备与管理系统处于同一局域网环境，网络信号稳定，避免数据同步延迟或通讯中断。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="bg-neutral-dark text-white py-12">
@@ -376,405 +308,130 @@
           <p class="text-gray-400 mt-2">提升农业生产效率与质量</p>
         </div>
         <div class="flex space-x-6">
-          <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank" title="联系我们">
+          <a href="https://www.iv.edu.mo/contact" class="text-gray-400 hover:text-white transition-colors" target="_blank">
             <i class="fa fa-envelope text-2xl"></i>
-          </a>
-          <a href="javascript:;" class="text-gray-400 hover:text-white transition-colors" id="show-update-log" title="更新日志">
-            <i class="fa fa-history text-2xl"></i>
-          </a>
-          <a href="js.html" target="_blank" class="text-gray-400 hover:text-white transition-colors" title="车辆介绍">
-            <i class="fa fa-car text-2xl"></i>
           </a>
         </div>
       </div>
     </div>
   </footer>
 
+  <button id="ai-toggle-btn" class="ai-toggle-btn">
+    <i class="fa fa-robot text-xl"></i>
+  </button>
+
+  <div id="ai-chat-container" class="ai-chat-container hidden">
+    <div class="ai-chat-header">
+      <div class="flex items-center">
+        <i class="fa fa-robot mr-2"></i>
+        <span>智慧农场AI助理</span>
+      </div>
+      <button id="ai-close-btn" class="text-white hover:text-gray-200">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="ai-chat-messages" class="ai-chat-messages">
+      <div class="ai-message">
+        <p>你好！我是智慧农场AI助理，有什么可以帮助你的吗？</p>
+      </div>
+    </div>
+    
+    <div class="ai-chat-input">
+      <input type="text" id="ai-input" class="ai-input-field" placeholder="输入你的问题...">
+      <button id="ai-send-btn" class="ai-send-btn">
+        <i class="fa fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
   <script>
-    let connectedIP = null;
-    const connectBtn = document.getElementById('connect-device-btn');
-    const btnText = connectBtn.querySelector('.btn-text');
-    const btnIcon = connectBtn.querySelector('.connect-icon');
-    const ipDisplay = connectBtn.querySelector('.ip-display');
-    const ipAddressInput = document.getElementById('ip-address');
-    const ipErrorMessage = document.getElementById('ip-error-message');
-    const showUpdateLogBtn = document.getElementById('show-update-log');
-    const locationCityEl = document.getElementById('location-city');
-    const mainRiskIndexEl = document.getElementById('main-risk-index');
+    const imgUrls = [
+      'img/che1.png',
+      'img/che2.png',
+      'img/che3.png',
+      'img/che4.png',
+      'img/9.jpeg'
+    ];
     
-    const allHarvestCountEl = document.getElementById('all-harvest-count');
-    const TOTAL_HARVEST_STORAGE_KEY = 'totalAllHarvestData';
+    const imgElement = document.getElementById('vehicle-img');
+    const imgFallback = document.getElementById('img-fallback');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const indicators = document.querySelectorAll('.indicator-dot');
+    let currentIndex = 0;
     
-    let totalAllHarvest = parseInt(localStorage.getItem(TOTAL_HARVEST_STORAGE_KEY)) || 0;
+    imgElement.addEventListener('error', function() {
+      imgElement.style.display = 'none';
+      imgFallback.classList.remove('hidden');
+    });
     
-    function updateTotalAllHarvestDisplay() {
-      allHarvestCountEl.innerText = totalAllHarvest.toLocaleString();
-      allHarvestCountEl.classList.add('number-pulse');
-      setTimeout(() => {
-        allHarvestCountEl.classList.remove('number-pulse');
-      }, 500);
-      localStorage.setItem(TOTAL_HARVEST_STORAGE_KEY, totalAllHarvest);
-    }
+    imgElement.addEventListener('load', function() {
+      imgElement.style.display = 'block';
+      imgFallback.classList.add('hidden');
+    });
     
-    function showLocationModal() {
-      if (localStorage.getItem('locationPermission') !== 'allowed' && 
-          localStorage.getItem('locationPermission') !== 'denied') {
-        showModal('location-modal');
-      } else if (localStorage.getItem('locationPermission') === 'allowed') {
-        requestLocation();
-      } else {
-        locationCityEl.textContent = '未授权定位';
-      }
-    }
-    
-    function getCityByCoordinates(latitude, longitude) {
-      return new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.src = `https://api.map.baidu.com/reverse_geocoding/v3/?ak=zG4G95QPGGQw5nQwR1QwPw8Wf0UcZfQs&output=json&coordtype=wgs84ll&location=${latitude},${longitude}&callback=baiduReverseGeoCodeCallback`;
-        
-        window.baiduReverseGeoCodeCallback = function(result) {
-          if (result.status === 0 && result.result.addressComponent.city) {
-            let city = result.result.addressComponent.city;
-            if (city.endsWith('市')) {
-              city = city.slice(0, -1);
-            }
-            resolve(city);
-          } else {
-            resolve('定位失败');
-          }
-          document.body.removeChild(script);
-          delete window.baiduReverseGeoCodeCallback;
-        };
-        
-        document.body.appendChild(script);
+    function updateImage() {
+      imgElement.style.opacity = '0';
+      
+      imgElement.onload = function() {
+        imgElement.style.opacity = '1';
+        imgElement.style.display = 'block';
+        imgFallback.classList.add('hidden');
+      };
+      
+      imgElement.src = imgUrls[currentIndex];
+      imgElement.alt = `智联采丰車（${currentIndex + 1}/5）`;
+      
+      imgElement.onerror = function() {
+        imgElement.style.opacity = '1';
+        imgElement.style.display = 'none';
+        imgFallback.classList.remove('hidden');
+      };
+      
+      indicators.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
       });
     }
     
-    async function requestLocation() {
-      if (!navigator.geolocation) {
-        alert('您的浏览器不支持地理位置功能，请升级浏览器');
-        locationCityEl.textContent = '不支持定位';
-        return;
-      }
-      
-      try {
-        const position = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, {
-            enableHighAccuracy: false,
-            timeout: 10000,
-            maximumAge: 3600000
-          });
-        });
-        
-        const { latitude, longitude } = position.coords;
-        const city = await getCityByCoordinates(latitude, longitude);
-        
-        locationCityEl.textContent = city;
-        localStorage.setItem('userCity', city);
-        
-      } catch (error) {
-        console.error('获取定位失败:', error);
-        locationCityEl.textContent = '定位失败';
-      }
-    }
+    prevBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex - 1 + imgUrls.length) % imgUrls.length;
+      updateImage();
+    });
     
-    function updateRiskIndex() {
-      const min = 80;
-      const max = 88;
-      const newIndex = Math.floor(Math.random() * (max - min + 1)) + min;
-      
-      mainRiskIndexEl.textContent = newIndex;
-      mainRiskIndexEl.classList.add('number-pulse');
-      
-      setTimeout(() => {
-        mainRiskIndexEl.classList.remove('number-pulse');
-      }, 500);
-    }
+    nextBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex + 1) % imgUrls.length;
+      updateImage();
+    });
     
-    function setRiskIndexUpdateTimer() {
-      updateRiskIndex();
-      
-      const now = new Date();
-      const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0);
-      let timeToNextHour = nextHour.getTime() - now.getTime();
-      
-      setTimeout(() => {
-        updateRiskIndex();
-        setInterval(updateRiskIndex, 3600000);
-      }, timeToNextHour);
-    }
-
-    function showModal(modalId) {
-      const modal = document.getElementById(modalId);
-      if (modal) modal.classList.add('active');
-    }
-
-    function hideModal(modalId) {
-      const modal = document.getElementById(modalId);
-      if (modal) modal.classList.remove('active');
-    }
-
-    function validateIpFormat(ip) {
-      const ipRegex = /^(\d+\.){3}\d+$/;
-      return ipRegex.test(ip);
-    }
-
-    function switchToConnectedState(ip) {
-      connectedIP = ip;
-      
-      connectBtn.classList.remove('default');
-      connectBtn.classList.add('connected');
-      
-      btnIcon.className = 'fa fa-check-circle connect-icon mr-2';
-      btnText.textContent = '已连接';
-      
-      ipDisplay.textContent = ip;
-      ipDisplay.classList.remove('hidden');
-      
-      connectBtn.setAttribute('data-hover-text', '取消连接');
-    }
-
-    function switchToDisconnectedState() {
-      connectedIP = null;
-      
-      connectBtn.classList.remove('connected');
-      connectBtn.classList.add('default');
-      
-      btnIcon.className = 'fa fa-wifi connect-icon mr-2';
-      btnText.textContent = '连接设备';
-      
-      ipDisplay.classList.add('hidden');
-      ipDisplay.textContent = '';
-      
-      connectBtn.removeAttribute('data-hover-text');
-    }
-
-    const updateModal = document.getElementById('update-modal');
-    if (localStorage.getItem('updateModalClosed_v1.2') !== 'true') {
-      showModal('update-modal');
-    }
-
-    document.getElementById('close-modal').addEventListener('click', () => {
-      hideModal('update-modal');
-      localStorage.setItem('updateModalClosed_v1.2', 'true');
+    indicators.forEach((dot, index) => {
+      dot.addEventListener('click', function() {
+        currentIndex = index;
+        updateImage();
+      });
     });
-    document.getElementById('confirm-modal').addEventListener('click', () => {
-      hideModal('update-modal');
-      localStorage.setItem('updateModalClosed_v1.2', 'true');
-    });
-    updateModal.addEventListener('click', (e) => {
-      if (e.target === updateModal) {
-        hideModal('update-modal');
-        localStorage.setItem('updateModalClosed_v1.2', 'true');
-      }
-    });
-
-    connectBtn.addEventListener('click', () => {
-      if (connectedIP) {
-        switchToDisconnectedState();
-        return;
-      }
-      
-      showModal('connect-modal');
-    });
-
-    connectBtn.addEventListener('mouseenter', () => {
-      if (connectedIP && connectBtn.hasAttribute('data-hover-text')) {
-        btnText.textContent = connectBtn.getAttribute('data-hover-text');
-      }
-    });
-
-    connectBtn.addEventListener('mouseleave', () => {
-      if (connectedIP) {
-        btnText.textContent = '已连接';
-      }
-    });
-
-    document.getElementById('close-connect-modal').addEventListener('click', () => {
-      hideModal('connect-modal');
-    });
-    document.getElementById('connect-modal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('connect-modal')) {
-        hideModal('connect-modal');
-      }
-    });
-
-    document.getElementById('confirm-connect-btn').addEventListener('click', () => {
-      hideModal('connect-modal');
-      setTimeout(() => showModal('ip-modal'), 300);
-    });
-
-    document.getElementById('close-ip-modal').addEventListener('click', () => {
-      hideModal('ip-modal');
-      ipAddressInput.classList.remove('ip-input-error');
-      ipErrorMessage.classList.add('hidden');
-      ipAddressInput.value = '';
-    });
-    document.getElementById('ip-modal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('ip-modal')) {
-        hideModal('ip-modal');
-        ipAddressInput.classList.remove('ip-input-error');
-        ipErrorMessage.classList.add('hidden');
-        ipAddressInput.value = '';
-      }
-    });
-
-    ipAddressInput.addEventListener('input', (e) => {
-      const inputValue = e.target.value;
-      const filteredValue = inputValue.replace(/[^0-9.]/g, '');
-      
-      const dotCount = filteredValue.split('.').length - 1;
-      if (dotCount > 3) {
-        const parts = filteredValue.split('.');
-        e.target.value = `${parts[0]}.${parts[1]}.${parts[2]}.${parts.slice(3).join('')}`;
-      } else {
-        e.target.value = filteredValue;
-      }
-      
-      if (e.target.value) {
-        const isValid = validateIpFormat(e.target.value);
-        ipAddressInput.classList.toggle('ip-input-error', !isValid);
-        ipErrorMessage.classList.toggle('hidden', isValid);
-      } else {
-        ipAddressInput.classList.remove('ip-input-error');
-        ipErrorMessage.classList.add('hidden');
-      }
-    });
-
-    document.getElementById('submit-ip-btn').addEventListener('click', () => {
-      const ip = ipAddressInput.value.trim();
-      
-      if (!ip) {
-        alert('请输入IP地址');
-        ipAddressInput.classList.add('ip-input-error');
-        ipErrorMessage.classList.remove('hidden');
-        return;
-      }
-      
-      if (!validateIpFormat(ip)) {
-        ipAddressInput.classList.add('ip-input-error');
-        ipErrorMessage.classList.remove('hidden');
-        return;
-      }
-      
-      hideModal('ip-modal');
-      document.getElementById('connected-ip').textContent = `IP地址：${ip}`;
-      
-      setTimeout(() => showModal('success-modal'), 300);
-      
-      switchToConnectedState(ip);
-      
-      ipAddressInput.value = '';
-      ipAddressInput.classList.remove('ip-input-error');
-      ipErrorMessage.classList.add('hidden');
-    });
-
-    document.getElementById('close-success-modal').addEventListener('click', () => {
-      hideModal('success-modal');
-    });
-    document.getElementById('confirm-success-btn').addEventListener('click', () => {
-      hideModal('success-modal');
-    });
-    document.getElementById('success-modal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('success-modal')) {
-        hideModal('success-modal');
-      }
-    });
-
-    ipAddressInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') document.getElementById('submit-ip-btn').click();
-    });
-
-    const harvestCountEl = document.getElementById('harvest-count');
-    const harvestIcon = document.getElementById('harvest-icon');
-    const harvestTrendEl = document.getElementById('harvest-trend');
-    const STORAGE_KEY = 'dailyHarvestData';
-    
-    function getCurrentDate() {
-      return new Date().toISOString().split('T')[0];
-    }
-    
-    let harvestData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-      count: 0,
-      date: getCurrentDate(),
-      yesterdayCount: 0,
-      growthRate: 0
-    };
-    
-    function checkAndResetHarvest() {
-      const today = getCurrentDate();
-      if (harvestData.date !== today) {
-        harvestData.yesterdayCount = harvestData.count;
-        harvestData.count = 0;
-        harvestData.growthRate = 0;
-        harvestData.date = today;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
-      }
-      updateHarvestDisplay();
-      updateTotalAllHarvestDisplay();
-    }
-    
-    function updateHarvestDisplay() {
-      harvestCountEl.innerText = harvestData.count.toLocaleString();
-      
-      if (harvestData.growthRate > 0) {
-        harvestTrendEl.innerHTML = `<i class="fa fa-arrow-up mr-1 text-green-500"></i> ${harvestData.growthRate}% <span class="text-gray-500 ml-1">较昨日</span>`;
-        harvestTrendEl.classList.remove('text-red-500');
-        harvestTrendEl.classList.add('text-green-500');
-      } else if (harvestData.growthRate < 0) {
-        harvestTrendEl.innerHTML = `<i class="fa fa-arrow-down mr-1 text-red-500"></i> ${Math.abs(harvestData.growthRate)}% <span class="text-gray-500 ml-1">较昨日</span>`;
-        harvestTrendEl.classList.remove('text-green-500');
-        harvestTrendEl.classList.add('text-red-500');
-      } else {
-        harvestTrendEl.innerHTML = `<i class="fa fa-minus mr-1 text-gray-500"></i> 0% <span class="text-gray-500 ml-1">较昨日</span>`;
-        harvestTrendEl.classList.remove('text-green-500', 'text-red-500');
-      }
-    }
-    
-    function increaseHarvestCount() {
-      harvestData.count++;
-      harvestData.growthRate++;
-      totalAllHarvest++;
-      
-      harvestCountEl.innerText = harvestData.count.toLocaleString();
-      harvestCountEl.classList.add('number-pulse');
-      
-      updateTotalAllHarvestDisplay();
-      
-      setTimeout(() => {
-        harvestCountEl.classList.remove('number-pulse');
-      }, 500);
-      
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
-      updateHarvestDisplay();
-    }
     
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Tab' || e.key === 'Enter') {
-        e.preventDefault();
-        increaseHarvestCount();
+      if (e.key === 'ArrowLeft') {
+        prevBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        nextBtn.click();
       }
     });
     
-    checkAndResetHarvest();
-    
-    function setDailyResetTimer() {
-      const now = new Date();
-      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-      const timeToMidnight = tomorrow.getTime() - now.getTime() + 1000;
-      setTimeout(() => {
-        checkAndResetHarvest();
-        setDailyResetTimer();
-      }, timeToMidnight);
-    }
-    
-    setDailyResetTimer();
+    updateImage();
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
+        
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
+        
         if (targetElement) {
           window.scrollTo({
             top: targetElement.offsetTop - 20,
@@ -784,39 +441,122 @@
       });
     });
 
-    showUpdateLogBtn.addEventListener('click', () => {
-      showModal('update-modal');
+    const aiToggleBtn = document.getElementById('ai-toggle-btn');
+    const aiChatContainer = document.getElementById('ai-chat-container');
+    const aiCloseBtn = document.getElementById('ai-close-btn');
+    const aiChatMessages = document.getElementById('ai-chat-messages');
+    const aiInput = document.getElementById('ai-input');
+    const aiSendBtn = document.getElementById('ai-send-btn');
+
+    aiToggleBtn.addEventListener('click', function() {
+      aiChatContainer.classList.toggle('hidden');
+      aiToggleBtn.classList.toggle('hidden');
     });
-    
-    document.getElementById('allow-location-btn').addEventListener('click', () => {
-      hideModal('location-modal');
-      localStorage.setItem('locationPermission', 'allowed');
-      requestLocation();
+
+    aiCloseBtn.addEventListener('click', function() {
+      aiChatContainer.classList.add('hidden');
+      aiToggleBtn.classList.remove('hidden');
     });
-    
-    document.getElementById('deny-location-btn').addEventListener('click', () => {
-      hideModal('location-modal');
-      locationCityEl.textContent = '未授权定位';
-      localStorage.setItem('locationPermission', 'denied');
-    });
-    
-    document.getElementById('close-location-modal').addEventListener('click', () => {
-      hideModal('location-modal');
-      locationCityEl.textContent = '未授权定位';
-      localStorage.setItem('locationPermission', 'denied');
-    });
-    
-    window.addEventListener('load', () => {
-      const savedCity = localStorage.getItem('userCity');
-      if (savedCity) {
-        locationCityEl.textContent = savedCity;
+
+    function addMessage(content, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = isUser ? 'user-message' : 'ai-message';
+      
+      const messageContent = document.createElement('p');
+      messageContent.textContent = content;
+      
+      messageDiv.appendChild(messageContent);
+      aiChatMessages.appendChild(messageDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'ai-message typing-indicator';
+      typingDiv.id = 'typing-indicator';
+      
+      const dot1 = document.createElement('span');
+      dot1.className = 'typing-dot';
+      
+      const dot2 = document.createElement('span');
+      dot2.className = 'typing-dot';
+      
+      const dot3 = document.createElement('span');
+      dot3.className = 'typing-dot';
+      
+      typingDiv.appendChild(dot1);
+      typingDiv.appendChild(dot2);
+      typingDiv.appendChild(dot3);
+      
+      aiChatMessages.appendChild(typingDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+      
+      return typingDiv;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
       }
+    }
+
+    function getAiResponse(userMessage) {
+      const lowerMessage = userMessage.toLowerCase().trim();
       
-      showLocationModal();
+      if (lowerMessage.includes('作业效率') || lowerMessage.includes('效率')) {
+        return '智联采丰车的作业效率为15亩/小时，相比传统设备提升了300%，大幅提高了农业生产效率。';
+      } else if (lowerMessage.includes('动力') || lowerMessage.includes('电动')) {
+        return '智联采丰车采用纯电动动力类型，环保且运行成本低，符合现代农业的绿色发展理念。';
+      } else if (lowerMessage.includes('控制') || lowerMessage.includes('巡航')) {
+        return '采丰车支持自动巡航+手动备份的控制方式，可通过快速编程界面设定作业参数和路径，无需现场值守。';
+      } else if (lowerMessage.includes('收获精度') || lowerMessage.includes('精度')) {
+        return '采丰车的收获效率达到人工的1.5倍，作物损伤率低于5%，收获精度非常高。';
+      } else if (lowerMessage.includes('适用作物') || lowerMessage.includes('作物')) {
+        return '智联采丰车适用于蔬菜、谷物、油料等多种作物的种植和收获作业。';
+      } else if (lowerMessage.includes('主板') || lowerMessage.includes('skcon9') || lowerMessage.includes('通讯')) {
+        return '采丰车首次实现SKCON9主板双向通讯，接入Mesh2.0/内联网，实现稳定网络传输，实时上传数据至智慧农场管理系统。';
+      } else if (lowerMessage.includes('安全') || lowerMessage.includes('防护')) {
+        return '采丰车搭载新能源汽车同款视觉辅助驾驶技术，能精准检测前方障碍，实现自动启停，有效规避运行中的各类突发情况。';
+      } else if (lowerMessage.includes('维护') || lowerMessage.includes('保养')) {
+        return '每日作业后需清洁播种器、收获组件及传感器，每周检查电池状态和轮胎，每月进行一次全面设备检测与维护。';
+      } else if (lowerMessage.includes('使用须知') || lowerMessage.includes('须知')) {
+        return '使用采丰车前需检查设备电量、组件状态及网络连接；作业时禁止人员进入作业区域；恶劣天气请勿使用；确保设备与管理系统网络连接稳定。';
+      } else if (lowerMessage.includes('用户手册') || lowerMessage.includes('手册')) {
+        return '你可以点击页面中的"用户手册 SKCON9"链接查看详细的使用说明和操作指南。';
+      } else if (lowerMessage.includes('管理系统') || lowerMessage.includes('系统')) {
+        return '智慧农场管理系统可以实时监控生长数据，精准统计采收量，科学防控种植风险，你可以点击页面上方的"进入管理系统"按钮访问。';
+      } else if (lowerMessage.includes('你好') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+        return '你好！很高兴为你解答关于智慧农场和智联采丰车的任何问题。';
+      } else if (lowerMessage.includes('谢谢') || lowerMessage.includes('感谢')) {
+        return '不客气！如果还有其他问题需要解答，我随时都在。';
+      } else {
+        return '我是智慧农场AI助理，专注于解答关于智联采丰车和智慧农场管理系统的问题。你可以询问设备参数、功能特点、使用须知等相关内容，我会尽力解答。';
+      }
+    }
+
+    function sendMessage() {
+      const message = aiInput.value.trim();
+      if (!message) return;
       
-      updateTotalAllHarvestDisplay();
+      addMessage(message, true);
+      aiInput.value = '';
       
-      setRiskIndexUpdateTimer();
+      const typingIndicator = addTypingIndicator();
+      
+      setTimeout(() => {
+        removeTypingIndicator();
+        const response = getAiResponse(message);
+        addMessage(response);
+      }, 1000);
+    }
+
+    aiSendBtn.addEventListener('click', sendMessage);
+
+    aiInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
     });
   </script>
 </body>
