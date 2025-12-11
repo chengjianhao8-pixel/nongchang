@@ -16,7 +16,8 @@
             secondary: '#3b82f6',
             accent: '#f97316',
             neutral: '#f3f4f6',
-            'neutral-dark': '#1f2937'
+            'neutral-dark': '#1f2937',
+            ai: '#8b5cf6'
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -74,6 +75,45 @@
       }
       .manual-link {
         @apply mt-6 flex items-center justify-center py-3 bg-secondary/5 border border-secondary/20 text-secondary rounded-lg text-base font-medium hover:bg-secondary/10 transition-colors;
+      }
+      .ai-chat-container {
+        @apply fixed bottom-6 right-6 z-50 w-80 md:w-96 flex flex-col bg-white rounded-xl shadow-xl overflow-hidden;
+      }
+      .ai-chat-header {
+        @apply bg-ai text-white py-3 px-4 flex justify-between items-center;
+      }
+      .ai-chat-messages {
+        @apply flex-1 overflow-y-auto max-h-[60vh] p-4 bg-gray-50 space-y-4;
+      }
+      .ai-message {
+        @apply bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[85%] border border-gray-100;
+      }
+      .user-message {
+        @apply bg-ai/10 text-neutral-dark rounded-lg rounded-tr-none p-3 shadow-sm max-w-[85%] ml-auto;
+      }
+      .ai-chat-input {
+        @apply flex items-center border-t border-gray-100 p-3;
+      }
+      .ai-input-field {
+        @apply flex-1 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ai/50 focus:border-ai mr-2;
+      }
+      .ai-send-btn {
+        @apply bg-ai text-white rounded-lg px-4 py-2 hover:bg-ai/90 transition-colors;
+      }
+      .ai-toggle-btn {
+        @apply fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-ai text-white shadow-lg flex items-center justify-center hover:bg-ai/90 transition-all duration-300;
+      }
+      .typing-indicator {
+        @apply flex items-center space-x-1.5 py-2 pl-3;
+      }
+      .typing-dot {
+        @apply w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
       }
     }
   </style>
@@ -276,6 +316,35 @@
     </div>
   </footer>
 
+  <button id="ai-toggle-btn" class="ai-toggle-btn">
+    <i class="fa fa-robot text-xl"></i>
+  </button>
+
+  <div id="ai-chat-container" class="ai-chat-container hidden">
+    <div class="ai-chat-header">
+      <div class="flex items-center">
+        <i class="fa fa-robot mr-2"></i>
+        <span>智慧农场AI助理</span>
+      </div>
+      <button id="ai-close-btn" class="text-white hover:text-gray-200">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="ai-chat-messages" class="ai-chat-messages">
+      <div class="ai-message">
+        <p>你好！我是智慧农场AI助理，有什么可以帮助你的吗？</p>
+      </div>
+    </div>
+    
+    <div class="ai-chat-input">
+      <input type="text" id="ai-input" class="ai-input-field" placeholder="输入你的问题...">
+      <button id="ai-send-btn" class="ai-send-btn">
+        <i class="fa fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
   <script>
     const imgUrls = [
       'img/che1.png',
@@ -370,6 +439,124 @@
           });
         }
       });
+    });
+
+    const aiToggleBtn = document.getElementById('ai-toggle-btn');
+    const aiChatContainer = document.getElementById('ai-chat-container');
+    const aiCloseBtn = document.getElementById('ai-close-btn');
+    const aiChatMessages = document.getElementById('ai-chat-messages');
+    const aiInput = document.getElementById('ai-input');
+    const aiSendBtn = document.getElementById('ai-send-btn');
+
+    aiToggleBtn.addEventListener('click', function() {
+      aiChatContainer.classList.toggle('hidden');
+      aiToggleBtn.classList.toggle('hidden');
+    });
+
+    aiCloseBtn.addEventListener('click', function() {
+      aiChatContainer.classList.add('hidden');
+      aiToggleBtn.classList.remove('hidden');
+    });
+
+    function addMessage(content, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = isUser ? 'user-message' : 'ai-message';
+      
+      const messageContent = document.createElement('p');
+      messageContent.textContent = content;
+      
+      messageDiv.appendChild(messageContent);
+      aiChatMessages.appendChild(messageDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'ai-message typing-indicator';
+      typingDiv.id = 'typing-indicator';
+      
+      const dot1 = document.createElement('span');
+      dot1.className = 'typing-dot';
+      
+      const dot2 = document.createElement('span');
+      dot2.className = 'typing-dot';
+      
+      const dot3 = document.createElement('span');
+      dot3.className = 'typing-dot';
+      
+      typingDiv.appendChild(dot1);
+      typingDiv.appendChild(dot2);
+      typingDiv.appendChild(dot3);
+      
+      aiChatMessages.appendChild(typingDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+      
+      return typingDiv;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    function getAiResponse(userMessage) {
+      const lowerMessage = userMessage.toLowerCase().trim();
+      
+      if (lowerMessage.includes('作业效率') || lowerMessage.includes('效率')) {
+        return '智联采丰车的作业效率为15亩/小时，相比传统设备提升了300%，大幅提高了农业生产效率。';
+      } else if (lowerMessage.includes('动力') || lowerMessage.includes('电动')) {
+        return '智联采丰车采用纯电动动力类型，环保且运行成本低，符合现代农业的绿色发展理念。';
+      } else if (lowerMessage.includes('控制') || lowerMessage.includes('巡航')) {
+        return '采丰车支持自动巡航+手动备份的控制方式，可通过快速编程界面设定作业参数和路径，无需现场值守。';
+      } else if (lowerMessage.includes('收获精度') || lowerMessage.includes('精度')) {
+        return '采丰车的收获效率达到人工的1.5倍，作物损伤率低于5%，收获精度非常高。';
+      } else if (lowerMessage.includes('适用作物') || lowerMessage.includes('作物')) {
+        return '智联采丰车适用于蔬菜、谷物、油料等多种作物的种植和收获作业。';
+      } else if (lowerMessage.includes('主板') || lowerMessage.includes('skcon9') || lowerMessage.includes('通讯')) {
+        return '采丰车首次实现SKCON9主板双向通讯，接入Mesh2.0/内联网，实现稳定网络传输，实时上传数据至智慧农场管理系统。';
+      } else if (lowerMessage.includes('安全') || lowerMessage.includes('防护')) {
+        return '采丰车搭载新能源汽车同款视觉辅助驾驶技术，能精准检测前方障碍，实现自动启停，有效规避运行中的各类突发情况。';
+      } else if (lowerMessage.includes('维护') || lowerMessage.includes('保养')) {
+        return '每日作业后需清洁播种器、收获组件及传感器，每周检查电池状态和轮胎，每月进行一次全面设备检测与维护。';
+      } else if (lowerMessage.includes('使用须知') || lowerMessage.includes('须知')) {
+        return '使用采丰车前需检查设备电量、组件状态及网络连接；作业时禁止人员进入作业区域；恶劣天气请勿使用；确保设备与管理系统网络连接稳定。';
+      } else if (lowerMessage.includes('用户手册') || lowerMessage.includes('手册')) {
+        return '你可以点击页面中的"用户手册 SKCON9"链接查看详细的使用说明和操作指南。';
+      } else if (lowerMessage.includes('管理系统') || lowerMessage.includes('系统')) {
+        return '智慧农场管理系统可以实时监控生长数据，精准统计采收量，科学防控种植风险，你可以点击页面上方的"进入管理系统"按钮访问。';
+      } else if (lowerMessage.includes('你好') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+        return '你好！很高兴为你解答关于智慧农场和智联采丰车的任何问题。';
+      } else if (lowerMessage.includes('谢谢') || lowerMessage.includes('感谢')) {
+        return '不客气！如果还有其他问题需要解答，我随时都在。';
+      } else {
+        return '我是智慧农场AI助理，专注于解答关于智联采丰车和智慧农场管理系统的问题。你可以询问设备参数、功能特点、使用须知等相关内容，我会尽力解答。';
+      }
+    }
+
+    function sendMessage() {
+      const message = aiInput.value.trim();
+      if (!message) return;
+      
+      addMessage(message, true);
+      aiInput.value = '';
+      
+      const typingIndicator = addTypingIndicator();
+      
+      setTimeout(() => {
+        removeTypingIndicator();
+        const response = getAiResponse(message);
+        addMessage(response);
+      }, 1000);
+    }
+
+    aiSendBtn.addEventListener('click', sendMessage);
+
+    aiInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
     });
   </script>
 </body>
