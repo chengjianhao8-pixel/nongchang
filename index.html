@@ -748,14 +748,12 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(harvestData));
       updateHarvestDisplay();
     }
-    
+  
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Tab' || e.key === 'Enter') {
+      if (e.key === 'PageUp') {
         e.preventDefault();
         increaseHarvestCount();
       }
-    });
-    
     checkAndResetHarvest();
     
     function setDailyResetTimer() {
